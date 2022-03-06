@@ -1,2 +1,2 @@
 # MO50A22
-Projet of MO50 UTBM
+Project of MO50 UTBM
