@@ -1,4 +1,4 @@
-# MO50A22
+# Gestion de la cantine
 Project of MO50 UTBM
 
 ## ATTENTION
