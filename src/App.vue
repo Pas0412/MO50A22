@@ -1,14 +1,28 @@
 <template>
   <div class="header">
-    <img class="logo" alt="projet logo" src="./assets/logo.png">
-    <span class="title">Un passage fluide et sans surprise pour un repas serein</span>
+    <div class="logo">
+      <img class="logo-image" alt="project logo" src="./assets/logo.png">
+      <div class="title">
+        <div class="projName">GCUF</div>
+        <div class="slogan">Un passage fluide et sans surprise pour un repas serein</div>
+      </div>
+    </div>
+    <div class="header-right-container">
+      <div class="about-us">About us</div>
+      <div class="divider">|</div>
+      <div class="admin">Admin login</div>
+    </div>
   </div>
   <spliter class="spliter"></spliter>
+
+  <div class="middle">
+    <annonces></annonces>
+  </div>
+
   <div class="scroll">
     <div v-for="item in tabList" :key="item">
       <div class="container">
         <img :src="item.url" height="150" width="200">
-<!--        <img src="./assets/fish.jpeg">-->
         <div class="text-container">
           <span class="text-left">{{ item.name }}</span>
           <span class="text-right">{{ item.amount }}</span>
@@ -21,11 +35,12 @@
 
 <script>
 import Spliter from "@/components/spliter";
+import Annonces from "@/components/annonces";
 
 
 export default {
   // eslint-disable-next-line vue/no-unused-components
-  components: {Spliter},
+  components: {Annonces, Spliter},
   data() {
     return {
       tabList: [
@@ -69,28 +84,67 @@ export default {
 }
 
 .header {
-  margin-left: 20px;
-  margin-top: 20px;
-  overflow: hidden;
-  display: block;
-  text-align: center;
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
 .logo {
-  position: absolute;
   left: 30px;
   top: 15px;
-  height: 50px;
-  width: 50px;
+  height: 80px;
+  width: 500px;
+  display: flex;
+  flex-direction: row;
+}
+
+.logo-image {
+  height: 80px;
+  width: 80px;
 }
 
 .title {
-  font-size: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-bottom: 13px;
+  padding-top: 5px;
+  margin-left: 10px;
+}
+
+.projName {
+  font-size: 30px;
+}
+
+.slogan {
+  font-size: 8px;
+  color: grey;
+}
+
+.header-right-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.divider {
+  margin-left: 10px;
+  margin-right: 10px;
+  color: grey;
+  font-weight: bold;
 }
 
 .spliter {
   height: 20px;
   margin-top: 10px;
+}
+
+.middle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .scroll {
