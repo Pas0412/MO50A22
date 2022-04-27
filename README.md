@@ -4,7 +4,13 @@ Project of MO50 UTBM
 ## ATTENTION
 !!! If you want to modify the code, PLEASE create a branch and start a pullrequest !!!
 
+
 ## Project setup
+
+### change the url for server
+modify the baseURL in the file src/utils/const/const.js to access the server
+
+### install all the necessary modules 
 ```
 npm install
 ```

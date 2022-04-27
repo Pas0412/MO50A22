@@ -22,7 +22,7 @@
   <div class="scroll">
     <div v-for="item in tabList" :key="item">
       <div class="container">
-        <img :src="item.url" height="150" width="200">
+        <img :src="item.imgurl" height="150" width="200">
         <div class="text-container">
           <span class="text-left">{{ item.name }}</span>
           <span class="text-right">{{ item.amount }}</span>
@@ -37,34 +37,60 @@
 import Spliter from "@/components/spliter";
 import Annonces from "@/components/annonces";
 
-
 export default {
+  name:"App",
+  mounted() {
+    this.init();
+  },
+  methods:{
+    /**
+    * @description: do initialization: 1. get all the data of plats from server
+    * @author yuan.cao@utbm.fr
+    * @date 2022-04-27 15:54:21
+    */
+    init(){
+      this.$store.dispatch('GetAllPlats').then(res=>{
+        // console.log(res);
+        if(res&&res.data){//to make sure the correct arrival of data
+          if(res.code==='suc'){
+            res.data.forEach((plat)=>{
+              this.tabList.push(plat)
+            })
+          }else{
+            console.log('server response error');
+          }
+        }
+      }).catch(err=>{
+         console.log(err)
+      })
+    }
+  },
   // eslint-disable-next-line vue/no-unused-components
   components: {Annonces, Spliter},
   data() {
     return {
       tabList: [
-        { id: "01", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "02", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "03", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "04", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "05", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "06", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "07", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "08", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "09", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "10", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "11", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "12", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "13", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "06", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "07", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "08", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "09", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "10", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "11", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "12", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        { id: "13", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "01", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "02", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "03", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "04", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "05", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "06", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "07", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "08", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "09", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "10", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "11", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "12", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "13", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "06", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "07", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "08", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "09", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "10", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "11", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "12", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
+        // { id: "13", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
       ]
     }
   }
