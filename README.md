@@ -9,6 +9,8 @@ Project of MO50 UTBM
 
 ### change the url for server
 modify the baseURL in the file src/utils/const/const.js to access the server
+### configure the id for canteen
+modify the constant cantineID in the src/utils/const/const.js
 
 ### install all the necessary modules 
 ```

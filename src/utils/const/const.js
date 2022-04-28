@@ -5,7 +5,10 @@
 * @version 1.0
 */
 
+//general const
+const cantineID = '1'
+
 //api const
 const baseURL = 'http://127.0.0.1:8084'
 
-export {baseURL}
+export {cantineID,baseURL}

@@ -6,6 +6,7 @@
 */
 
 import {request} from "@/network/request";
+import {cantineID} from "@/utils/const/const";
 
 /**
 * @description: getting all the data of plats
@@ -16,6 +17,9 @@ export function getAllPlats(){
         request({
             url:'/queryAllPlats',
             method:'get',
+            params:{
+                cid: cantineID
+            }
         }).then(data=>resolve(data)).catch(err=>reject(err))
     })
 }
