@@ -8,18 +8,28 @@
     </router-view>
     <!-- cache component instances -->
   </div>
+
+  <!--for test proposal, delete me !!!  -->
+  <h4>{{curWebSocketData}}</h4>
+
 <!--  <HelloWorld msg="Welcome to Gestion de la cantine"/>-->
 </template>
 
 <script>
-import {openSocket} from '@/assets/js/websocket';
-import {cantineID} from "@/utils/const/const";
-
+import {cantineID, refreshMenuInterval} from "@/utils/const/const";
+import {openSocket, sendThisOut} from "@/assets/js/websocket";
 
 export default {
   name:"App",
   mounted() {
     this.init();
+  },
+  data() {
+    return {
+      socketCon:null,
+      curWebSocketData:null,
+      stateMonitor:null,
+    }
   },
   methods: {
     /**
@@ -28,10 +38,33 @@ export default {
     * @date 2022-04-29 19:05:43
     */
     init(){
-      openSocket(cantineID);
+      //to bind the vue instance
+      sendThisOut(this)
+      this.openSocketConnection()
+      this.activeOnWatchState();
     },
-
-
+    openSocketConnection(){
+      openSocket(cantineID)
+    },
+    /**
+    * @description: monitor : every ? seconds we execute...
+    * @author yuan.cao@utbm.fr
+    * @date 2022-05-01 19:03:06
+    */
+    activeOnWatchState(){
+      this.stateMonitor = setInterval(function (){
+        this.changeState();
+      }.bind(this),refreshMenuInterval)
+    },
+    /**
+     * @description: core code : what to execute after receiving new data from server using WebSocket
+     * @author yuan.cao@utbm.fr
+     * @date 2022-05-01 18:51:20
+     */
+    changeState(){
+      //do...
+      //write your code here
+    },
   }
 
 }
