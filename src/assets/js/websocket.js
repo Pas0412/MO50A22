@@ -1,11 +1,21 @@
 /**
-* @description: unique websocket establishment file
+* @description: unique websocket establishment file, attached to App.vue
 * @author yuan.cao@utbm.fr
 * @date 2022-04-29 19:49:42
 * @version 1.0
 */
 const {socketUrl} = require("@/utils/const/const");
-let socket;
+
+/*to get the vue instance (this) which uses this script */
+export let vm = null;
+
+const sendThis = ( _this )=> {
+    vm = _this;
+};
+export function sendThisOut(_this){
+    sendThis(_this) //expose
+}
+
 /**
  * @description: establish the websocket connection with the server
  * @param cantineID the id of the cantine
@@ -16,26 +26,26 @@ function openSocket(cantineID) {
 
     const socketUrlComplet = socketUrl+cantineID;
     console.log(socketUrlComplet);
-    if(socket!=null){
-        socket.close();
-        socket=null;
+    if(vm.socketCon!=null){
+        vm.socketCon.close();
+        vm.socketCon=null;
     }
-    socket = new WebSocket(socketUrlComplet);
+    vm.socketCon = new WebSocket(socketUrlComplet);
     //打开事件
-    socket.onopen = function() {
+    vm.socketCon.onopen = function() {
         console.log("websocket is opened");
     };
     //获得消息事件
-    socket.onmessage = function(msg) {
-        console.log(msg.data);
+    vm.socketCon.onmessage = function(msg) {
+        vm.curWebSocketData = msg.data;
         //发现消息进入,开始处理前端触发逻辑
     };
     //关闭事件
-    socket.onclose = function() {
+    vm.socketCon.onclose = function() {
         console.log("websocket is closed");
     };
     //发生了错误事件
-    socket.onerror = function() {
+    vm.socketCon.onerror = function() {
         console.log("websocket goes wrong");
     }
 }
@@ -47,8 +57,8 @@ function openSocket(cantineID) {
 * @date 2022-04-29 19:47:41
 */
 function sendMessage(cantineID,contentText) {
-    socket.send('{"cantineID":"'+cantineID+'","contentText":"'+contentText+'"}');
-    console.log('{"cantineID":"'+cantineID+'","contentText":"'+contentText+'"}');
+    vm.socketCon.send('{"toCanteenID":"'+cantineID+'","contentText":"'+contentText+'"}');
+    console.log('{"toCanteenID":"'+cantineID+'","contentText":"'+contentText+'"}');
 }
 
 export {openSocket,sendMessage}

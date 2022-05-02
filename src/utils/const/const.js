@@ -10,9 +10,10 @@ const serverUrl = '127.0.0.1:8084'
 
 //general const
 const cantineID = '1'
+const refreshMenuInterval = 100 //the interval to refresh the menu
 
 //api const
 const baseURL = httpOrHttps+serverUrl
-const socketUrl = 'ws://'+serverUrl+'/api/pushMessage/'
+const socketUrl = 'ws://'+serverUrl+'/ws/connection/'
 
-export {cantineID,baseURL,socketUrl}
+export {cantineID,refreshMenuInterval,baseURL,socketUrl}
