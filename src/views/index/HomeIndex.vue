@@ -159,7 +159,7 @@ export default {
 }
 
 .spliter {
-  height: 20px;
+  height: 5px;
   margin-top: 10px;
 }
 
@@ -174,7 +174,7 @@ export default {
   overflow-x: auto;
   margin-top: 20px;
   height: 400px;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
   align-content: flex-start;
@@ -186,7 +186,7 @@ export default {
 
 .text-container {
   display: flex;
-  width: 200px;
+  width: 225px;
   justify-content: space-between;
 }
 </style>
