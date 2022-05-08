@@ -15,17 +15,19 @@
   </div>
   <spliter class="spliter"></spliter>
 
-  <div class="middle">
-    <annonces></annonces>
-  </div>
+  <div class="app-body">
+    <div class="middle">
+      <annonces></annonces>
+    </div>
 
-  <div class="scroll">
-    <div v-for="item in tabList" :key="item">
-      <div class="container">
-        <img :src="item.imgurl" height="150" width="200">
-        <div class="text-container">
-          <span class="text-left">{{ item.name }}</span>
-          <span class="text-right">{{ item.amount }}</span>
+    <div class="scroll">
+      <div v-for="item in tabList" :key="item">
+        <div class="container">
+            <img class="plats-img" :src="item.imgurl" height="200" width="250">
+          <div class="text-container">
+            <span class="text-left">{{ item.name }}</span>
+            <span class="text-right">{{ item.amount }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -163,30 +165,49 @@ export default {
   margin-top: 10px;
 }
 
+.app-body {
+  background-color: ghostwhite;
+  width: 100%;
+  padding-top: 20px;
+}
+
 .middle {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-left: 150px;
+  margin-right: 150px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px grey;
 }
 
 .scroll {
   display: flex;
+  background-color: white;
   overflow-x: auto;
   margin-top: 20px;
-  height: 400px;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-content: flex-start;
+  margin-left: 150px;
+  margin-right: 150px;
+  padding-top: 30px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px grey;
 }
 
 .container {
-  width: 220px;
+  margin : 35px;
 }
 
 .text-container {
   display: flex;
-  width: 225px;
+  width: 250px;
   justify-content: space-between;
+}
+
+.plats-img {
+  border-radius: 15%;
 }
 </style>
