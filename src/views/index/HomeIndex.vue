@@ -14,16 +14,15 @@
     </div>
   </div>
   <spliter class="spliter"></spliter>
-
   <div class="app-body">
     <div class="middle">
-      <annonces></annonces>
+      <news></news>
     </div>
 
     <div class="scroll">
       <div v-for="item in tabList" :key="item">
         <div class="container">
-            <img class="plats-img" :src="item.imgurl" height="200" width="250">
+            <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
           <div class="text-container">
             <span class="text-left">{{ item.name }}</span>
             <span class="text-right">{{ item.amount }}</span>
@@ -35,8 +34,8 @@
 </template>
 
 <script>
-import Annonces from "@/components/annonces";
 import Spliter from "@/components/spliter";
+import News from "@/components/news";
 
 export default {
   name: "HomeIndex",
@@ -75,32 +74,10 @@ export default {
     }
   },
   // eslint-disable-next-line vue/no-unused-components
-  components: {Annonces, Spliter},
+  components: {Spliter, News},
   data() {
     return {
-      tabList: [
-        // { id: "01", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "02", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "03", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "04", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "05", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "06", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "07", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "08", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "09", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "10", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "11", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "12", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "13", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "06", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "07", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "08", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "09", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "10", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "11", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "12", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-        // { id: "13", name: 'fish', amount: "5", url: require('@/assets/fish.jpeg')},
-      ]
+      tabList: []
     }
   }
 }

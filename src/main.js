@@ -3,11 +3,17 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 import axios from "axios";
+import ElementPlus from 'element-plus';
+import 'element-plus/theme-chalk/index.css';
 
-createApp(App)
-    .use(router)
-    .use(store)
-    .mount('#app')
+
+///vue3.0使用element-plus
+const app = createApp(App)
+
+    app.use(router)
+    app.use(store)
+    app.mount('#app')
+    app.use(ElementPlus)
 
 //allow taking info of cookies when crossing domain
 axios.defaults.withCredentials = true
