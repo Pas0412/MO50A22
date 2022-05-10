@@ -8,22 +8,47 @@
       </div>
     </div>
     <div class="header-right-container">
-      <el-button class="about-us" @click="drawer = true" type="primary">About us</el-button>
+      <el-button class="header-button" @click="drawer = true" type="primary">About us</el-button>
       <div class="divider">|</div>
-      <div class="admin">Admin login</div>
+      <el-button class="header-button" @click="dialogFormVisible = true">Admin login</el-button>
     </div>
   </div>
+
   <el-drawer
       title="Gestion de la cantine"
       v-model="drawer"
       :direction="direction">
     <span>L'équipe de MO50</span>
   </el-drawer>
+  <el-dialog v-model="dialogFormVisible" title="Admin login">
+    <el-form :model="form">
+      <el-form-item label="Username" :label-width="formLabelWidth">
+        <el-input v-model="form.name" autocomplete="off" />
+      </el-form-item>
+      <el-form-item label="Password" :label-width="formLabelWidth">
+        <el-input v-model="form.password" autocomplete="off" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="login">Log in</el-button>
+      </span>
+    </template>
+  </el-dialog>
+
   <spliter class="spliter"></spliter>
   <div class="app-body">
     <div class="middle">
       <news></news>
-      //TODO: 横向滚动条展示高分菜品组件
+      <div class="popular">
+        <span class="demonstration">Les plats les plus populaires</span>
+        <el-carousel height="230px">
+          <el-carousel-item v-for="item in 4" :key="item">
+            <h3 class="small justify-center" text="2xl">{{ item }}</h3>
+          </el-carousel-item>
+        </el-carousel>
+      </div>
       <waitLine></waitLine>
     </div>
 
@@ -39,6 +64,7 @@
         </div>
       </div>
     </div>
+    <div class="footer"></div>
   </div>
   <el-backtop :right="40" :bottom="100"/>
 </template>
@@ -57,7 +83,10 @@ export default {
     return {
       tabList: [],
       drawer: false,
-      direction: 'rtl'
+      direction: 'rtl',
+      form: { name:'', password:'' },
+      formLabelWidth: '140px',
+      dialogFormVisible: false
     }
   },
   mounted() {
@@ -67,6 +96,11 @@ export default {
     rating(){
       console.log(this.tabListitem.name);
 
+    },
+    login(){
+      console.log(this.form.name);
+      console.log(this.form.password);
+      //TODO: 设置不同按钮，需要用户名密码同时输入才可以点击； 发送至后端valid， 成功跳转，失败弹出重试信息
     },
     /**
      * @description: do initialization
@@ -149,7 +183,7 @@ export default {
   align-items: center;
 }
 
-.about-us {
+.header-button {
   background-color: white;
   border-color: white;
   color: black;
@@ -185,19 +219,59 @@ export default {
   box-shadow: 2px 2px 2px grey;
 }
 
+.popular {
+  text-align: center;
+  width: 1200px;
+  margin-right: 50px;
+  margin-left: 50px;
+  margin-top: 10px;
+  height: 250px;
+}
+
+.demonstration {
+  color: var(--el-text-color-secondary);
+  font-size: 20px;
+}
+
+.el-carousel__item h3 {
+  color: #475669;
+  opacity: 0.75;
+  line-height: 200px;
+  text-align: center;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
+
+.el-button--text {
+  margin-right: 15px;
+}
+.el-select {
+  width: 300px;
+}
+.el-input {
+  width: 300px;
+}
+.dialog-footer button:first-child {
+  margin-right: 10px;
+}
+
 .scroll {
   display: flex;
   background-color: white;
   overflow-x: auto;
-  margin-top: 20px;
   flex-direction: row;
   flex-wrap: wrap;
   align-content: flex-start;
-  margin-left: 150px;
-  margin-right: 150px;
   padding-top: 30px;
   border-radius: 10px;
   box-shadow: 2px 2px 2px grey;
+  margin: 20px 150px 50px;
 }
 
 .container {
@@ -212,5 +286,11 @@ export default {
 
 .plats-img {
   border-radius: 15%;
+}
+
+.footer {
+  height: 200px;
+  width: 100%;
+  background-color: black;
 }
 </style>
