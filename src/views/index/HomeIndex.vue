@@ -17,16 +17,19 @@
   <div class="app-body">
     <div class="middle">
       <news></news>
+      //TODO: 横向滚动条展示高分菜品组件
+      <waitLine></waitLine>
     </div>
 
     <div class="scroll">
-      <div v-for="item in tabList" :key="item">
-        <div class="container">
-            <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
+      <div v-for="item in tabList" :key="item" >
+        <div class="container" :home="this.item">
+          <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
           <div class="text-container">
             <span class="text-left">{{ item.name }}</span>
             <span class="text-right">{{ item.amount }}</span>
           </div>
+          <rate></rate>
         </div>
       </div>
     </div>
@@ -36,6 +39,8 @@
 <script>
 import Spliter from "@/components/spliter";
 import News from "@/components/news";
+import Rate from "@/components/rate";
+import WaitLine from "@/components/waitLine";
 
 export default {
   name: "HomeIndex",
@@ -43,6 +48,10 @@ export default {
     this.init();
   },
   methods:{
+    rating(){
+      console.log(this.tabListitem.name);
+
+    },
     /**
      * @description: do initialization
      * @author yuan.cao@utbm.fr
@@ -74,7 +83,7 @@ export default {
     }
   },
   // eslint-disable-next-line vue/no-unused-components
-  components: {Spliter, News},
+  components: {Spliter, News, Rate, WaitLine},
   data() {
     return {
       tabList: []
