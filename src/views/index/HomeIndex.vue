@@ -8,11 +8,17 @@
       </div>
     </div>
     <div class="header-right-container">
-      <div class="about-us">About us</div>
+      <el-button class="about-us" @click="drawer = true" type="primary">About us</el-button>
       <div class="divider">|</div>
       <div class="admin">Admin login</div>
     </div>
   </div>
+  <el-drawer
+      title="Gestion de la cantine"
+      v-model="drawer"
+      :direction="direction">
+    <span>L'équipe de MO50</span>
+  </el-drawer>
   <spliter class="spliter"></spliter>
   <div class="app-body">
     <div class="middle">
@@ -34,6 +40,7 @@
       </div>
     </div>
   </div>
+  <el-backtop :right="40" :bottom="100"/>
 </template>
 
 <script>
@@ -44,6 +51,15 @@ import WaitLine from "@/components/waitLine";
 
 export default {
   name: "HomeIndex",
+  // eslint-disable-next-line vue/no-unused-components
+  components: {Spliter, News, Rate, WaitLine},
+  data() {
+    return {
+      tabList: [],
+      drawer: false,
+      direction: 'rtl'
+    }
+  },
   mounted() {
     this.init();
   },
@@ -82,13 +98,6 @@ export default {
       })
     }
   },
-  // eslint-disable-next-line vue/no-unused-components
-  components: {Spliter, News, Rate, WaitLine},
-  data() {
-    return {
-      tabList: []
-    }
-  }
 }
 </script>
 
@@ -137,6 +146,14 @@ export default {
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
+  align-items: center;
+}
+
+.about-us {
+  background-color: white;
+  border-color: white;
+  color: black;
+  font-size: 18px;
 }
 
 .divider {

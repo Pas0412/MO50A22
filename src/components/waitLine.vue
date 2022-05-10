@@ -34,8 +34,9 @@ name: "waitLine",
   width: 300px;
   align-items: center;
   padding: 20px;
-  border-style: solid;
-  border-width: 2px;
+  border-left: ghostwhite;
+  border-left-style: solid;
+  border-left-width: 5px;
 }
 .waitHeader {
   text-align: center;
