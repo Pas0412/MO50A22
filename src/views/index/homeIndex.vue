@@ -20,19 +20,19 @@
       :direction="direction">
     <span>L'équipe de MO50</span>
   </el-drawer>
-  <el-dialog v-model="dialogFormVisible" title="Admin login">
+  <el-dialog v-model="dialogFormVisible" title="Admin login" width="500px">
     <el-form :model="form">
       <el-form-item label="Username" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off" />
+        <el-input v-model="form.name" autocomplete="off" placeholder="Please enter your username"/>
       </el-form-item>
       <el-form-item label="Password" :label-width="formLabelWidth">
-        <el-input v-model="form.password" autocomplete="off" />
+        <el-input v-model="form.password" autocomplete="off" placeholder="Please enter your password"/>
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="login">Log in</el-button>
+        <el-button :disabled="!isFilled" type="primary" @click="login">Log in</el-button>
       </span>
     </template>
   </el-dialog>
@@ -74,11 +74,12 @@ import Spliter from "@/components/spliter";
 import News from "@/components/news";
 import Rate from "@/components/rate";
 import WaitLine from "@/components/waitLine";
+import AdminPage from "./adminPage";
 
 export default {
   name: "HomeIndex",
   // eslint-disable-next-line vue/no-unused-components
-  components: {Spliter, News, Rate, WaitLine},
+  components: {Spliter, News, Rate, WaitLine, AdminPage},
   data() {
     return {
       tabList: [],
@@ -92,15 +93,24 @@ export default {
   mounted() {
     this.init();
   },
+  computed: {
+    isFilled() {
+      return !!this.form.name && this.form.password;
+    }
+  },
   methods:{
     rating(){
       console.log(this.tabListitem.name);
 
     },
     login(){
-      console.log(this.form.name);
-      console.log(this.form.password);
-      //TODO: 设置不同按钮，需要用户名密码同时输入才可以点击； 发送至后端valid， 成功跳转，失败弹出重试信息
+      this.$router.push({
+        name: 'adminPage',
+        params: {
+          userName: this.form.name,
+          passWord: this.form.password
+        }
+      })
     },
     /**
      * @description: do initialization
@@ -188,6 +198,10 @@ export default {
   border-color: white;
   color: black;
   font-size: 18px;
+}
+
+.inactive-login {
+  background-color: grey;
 }
 
 .divider {
