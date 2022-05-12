@@ -21,18 +21,18 @@
     <span>L'équipe de MO50</span>
   </el-drawer>
   <el-dialog v-model="dialogFormVisible" title="Admin login">
-    <el-form :model="form">
-      <el-form-item label="Username" :label-width="formLabelWidth">
+    <el-form :model="form" :rules="loginRules" ref="loginForm">
+      <el-form-item prop="name" label="Username" :label-width="formLabelWidth">
         <el-input v-model="form.name" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="Password" :label-width="formLabelWidth">
+      <el-form-item prop="password" label="Password" :label-width="formLabelWidth">
         <el-input v-model="form.password" autocomplete="off" />
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="login">Log in</el-button>
+        <el-button type="primary" @click.prevent="login" :loading="loginLoading" >Log in</el-button>
       </span>
     </template>
   </el-dialog>
@@ -74,6 +74,7 @@ import Spliter from "@/components/spliter";
 import News from "@/components/news";
 import Rate from "@/components/rate";
 import WaitLine from "@/components/waitLine";
+import {ElMessageBox} from "element-plus";
 
 export default {
   name: "HomeIndex",
@@ -84,9 +85,29 @@ export default {
       tabList: [],
       drawer: false,
       direction: 'rtl',
+      //used for login, carry the username and password
       form: { name:'', password:'' },
+      //the button remains loading when login
+      loginLoading:false,
       formLabelWidth: '140px',
-      dialogFormVisible: false
+      dialogFormVisible: false,
+      //rules for login : to make sure both username and password have values
+      loginRules:{
+        name:[//here the name must be the same as the object in model strictly
+          {
+            required:true,
+            message:'Please input your name',
+            trigger:'blur'
+          }
+        ],
+        password: [
+          {
+            required:true,
+            message:'Please input your password',
+            trigger:'blur'
+          }
+        ]
+      },
     }
   },
   mounted() {
@@ -97,10 +118,48 @@ export default {
       console.log(this.tabListitem.name);
 
     },
+    /**
+    * @description: login handler
+    * @author yong.huang@utbm.fr yuan.cao@utbm.fr
+    * @date 2022-05-12 17:53:58
+    */
     login(){
       console.log(this.form.name);
       console.log(this.form.password);
       //TODO: 设置不同按钮，需要用户名密码同时输入才可以点击； 发送至后端valid， 成功跳转，失败弹出重试信息
+      this.$refs.loginForm.validate(valid=>{
+        if(valid){
+          this.loginLoading=true;
+          this.$store
+              .dispatch('Login',this.form)
+              .then(res=>{
+                this.loginLoading=false;
+                if(res){//make sure there is response anyway
+                  if(res.code==='suc'){
+                    //if login succeeds, save the token into Vuex
+                    this.$store.commit('set_token',{token:res.token,userId:res.userId,name:res.data.name,role:res.data.role})
+                    // this.$router.push('/adminIndex');
+                  }else{
+                    ElMessageBox.alert(res.msg+", please re-login","Attention!",{
+                      confirmButtonText:'OK'
+                    })
+                    console.log('login fails');
+                  }
+                }else {
+                  console.log('response is null');
+                }
+              })
+              .catch((err)=>{
+                console.log('login error:' + err);
+                this.loginLoading=false;
+              })
+          return true;
+        }else{
+          console.log('parameters are not all legal')
+          return false;
+        }
+      })
+
     },
     /**
      * @description: do initialization

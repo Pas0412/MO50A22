@@ -12,8 +12,10 @@ const serverUrl = '127.0.0.1:8084'
 const cantineID = '1'
 const refreshMenuInterval = 100 //the interval to refresh the menu
 
+
 //api const
 const baseURL = httpOrHttps+serverUrl
 const socketUrl = 'ws://'+serverUrl+'/ws/connection/'
+const sessionExpiredTime = 1000*10//30 min
 
-export {cantineID,refreshMenuInterval,baseURL,socketUrl}
+export {cantineID,refreshMenuInterval,baseURL,socketUrl,sessionExpiredTime}
