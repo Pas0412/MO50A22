@@ -200,10 +200,6 @@ export default {
   font-size: 18px;
 }
 
-.inactive-login {
-  background-color: grey;
-}
-
 .divider {
   margin-left: 10px;
   margin-right: 10px;
@@ -265,12 +261,15 @@ export default {
 .el-button--text {
   margin-right: 15px;
 }
+
 .el-select {
   width: 300px;
 }
+
 .el-input {
   width: 300px;
 }
+
 .dialog-footer button:first-child {
   margin-right: 10px;
 }
