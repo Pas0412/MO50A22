@@ -42,6 +42,8 @@ export default {
       sendThisOut(this)
       this.openSocketConnection()
       this.activeOnWatchState();
+      window.addEventListener('unload',this.saveStateToken)
+      window.addEventListener('load',this.clearStateToken)
     },
     openSocketConnection(){
       openSocket(cantineID)
@@ -64,6 +66,17 @@ export default {
     changeState(){
       //do...
       //write your code here
+    },
+    /**
+    * @description: to make sure each time refreshed, the data in the vuex does not disappear
+    * @author yuan.cao@utbm.fr
+    * @date 2022-05-13 00:52:20
+    */
+    saveStateToken(){
+      sessionStorage.setItem('stateToken',JSON.stringify(this.$store.state.token))
+    },
+    clearStateToken(){
+      sessionStorage.removeItem('stateToken')
     },
   }
 

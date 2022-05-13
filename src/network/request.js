@@ -99,6 +99,34 @@ export function request(config){
 * @date 2022-04-27 16:06:49
 */
 function interceptorHandler(error){
-    //do...
-    console.log(error);
+    let alertMes = "error!"
+    if(error.response){//Prevent long-term unresponsive status from becoming undefined
+        switch (error.response.status) {
+            case 410:
+                alertMes = "No token yet";
+                break;
+            case 412:
+                alertMes = "Invalid token";
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('nowTime');
+                break;
+            default:
+                alertMes = "Unknown error";
+                console.log(error);
+                break;
+        }
+        ElMessageBox.alert(alertMes + ", please re-login", "Attention!", {
+            confirmButtonText: 'OK',
+            callback: () => {
+                window.location.replace("/")
+            }
+        }).catch(r => console.log(r))
+    }else{
+        ElMessageBox.alert("Please refreshed", "Attention!", {
+            confirmButtonText: 'OK',
+            callback: () => {
+                window.location.reload();
+            }
+        }).catch(r => console.log(r))
+    }
 }
