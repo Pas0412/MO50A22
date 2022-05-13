@@ -6,16 +6,23 @@ import { createRouter, createWebHistory } from 'vue-router'
 * @version 1.0
 */
 const HomeIndex = () => import('@/views/index/HomeIndex')
+const AdminPage = () => import("@/views/index/AdminPage")
 
 const routes = [
     {
         path: '',
-        redirect: '/homeIndex'
+        redirect: '/HomeIndex'
     },
     {
-        path: '/homeIndex',
+        path: '/HomeIndex',
         component: HomeIndex
+    },
+    {
+        path: '/AdminPage',
+        name: 'AdminPage',
+        component: AdminPage
     }
+
 ]
 
 const router = createRouter({
