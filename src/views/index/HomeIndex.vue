@@ -19,7 +19,6 @@
       v-model="drawer"
       :direction="direction">
     <span>L'équipe de MO50</span>
-    <div>Colin Yonghui Yuan Chenfan</div>
   </el-drawer>
   <el-dialog v-model="dialogFormVisible" title="Admin login">
     <el-form :model="form" :rules="loginRules" ref="loginForm">
@@ -38,10 +37,7 @@
     </template>
   </el-dialog>
 
-  <spliter class="grey"></spliter>
-  <spliter class="yellow"></spliter>
-  <spliter class="pink"></spliter>
-
+  <spliter class="spliter"></spliter>
   <div class="app-body">
     <div class="middle">
       <news></news>
@@ -260,19 +256,9 @@ export default {
   font-weight: bold;
 }
 
-.grey {
+.spliter {
   height: 5px;
   margin-top: 10px;
-}
-
-.yellow {
-  background-color: #f0c78a;
-  height: 3px;
-}
-
-.pink {
-  background-color: #f9a7a7;
-  height: 2px;
 }
 
 .app-body {

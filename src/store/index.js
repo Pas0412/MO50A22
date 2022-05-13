@@ -6,6 +6,8 @@
 */
 import { createStore } from 'vuex'
 import indexShow from "@/store/modules/indexShow";
+import user from "@/store/modules/user";
+import token from "@/store/modules/token";
 
 export default createStore({
     state: {
@@ -15,6 +17,8 @@ export default createStore({
     actions: {
     },
     modules: {
-        indexShow
+        indexShow,
+        user,
+        token
     }
 })
