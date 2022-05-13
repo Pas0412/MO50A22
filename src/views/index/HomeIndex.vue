@@ -19,31 +19,35 @@
       v-model="drawer"
       :direction="direction">
     <span>L'équipe de MO50</span>
+    <div>Yonghui Yuan Chenfan Colin</div>
   </el-drawer>
-  <el-dialog v-model="dialogFormVisible" title="Admin login">
+  <el-dialog v-model="dialogFormVisible" title="Admin login" width="500px">
     <el-form :model="form" :rules="loginRules" ref="loginForm">
       <el-form-item prop="name" label="Username" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off" />
+        <el-input v-model="form.name" autocomplete="off" placeholder="Please enter your username"/>
       </el-form-item>
       <el-form-item prop="password" label="Password" :label-width="formLabelWidth">
-        <el-input v-model="form.password" autocomplete="off" />
+        <el-input type="password" v-model="form.password" autocomplete="off" placeholder="Please enter your password"/>
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click.prevent="login" :loading="loginLoading" >Log in</el-button>
+        <el-button  :disabled="!isFilled" type="primary" @click.prevent="login" :loading="loginLoading" >Log in</el-button>
       </span>
     </template>
   </el-dialog>
 
-  <spliter class="spliter"></spliter>
+  <spliter class="grey"></spliter>
+  <spliter class="yellow"></spliter>
+  <spliter class="pink"></spliter>
+
   <div class="app-body">
     <div class="middle">
       <news></news>
       <div class="popular">
         <span class="demonstration">Les plats les plus populaires</span>
-        <el-carousel height="230px">
+        <el-carousel height="230px" v-model="carousel">
           <el-carousel-item v-for="item in 4" :key="item">
             <h3 class="small justify-center" text="2xl">{{ item }}</h3>
           </el-carousel-item>
@@ -75,13 +79,15 @@ import News from "@/components/news";
 import Rate from "@/components/rate";
 import WaitLine from "@/components/waitLine";
 import {ElMessageBox} from "element-plus";
+import AdminPage from "./AdminPage";
 
 export default {
   name: "HomeIndex",
   // eslint-disable-next-line vue/no-unused-components
-  components: {Spliter, News, Rate, WaitLine},
+  components: {Spliter, News, Rate, WaitLine, AdminPage},
   data() {
     return {
+      carousel: 0,
       tabList: [],
       drawer: false,
       direction: 'rtl',
@@ -113,6 +119,11 @@ export default {
   mounted() {
     this.init();
   },
+  computed: {
+    isFilled() {
+      return !!this.form.name && this.form.password;
+    }
+  },
   methods:{
     rating(){
       console.log(this.tabListitem.name);
@@ -124,9 +135,6 @@ export default {
     * @date 2022-05-12 17:53:58
     */
     login(){
-      console.log(this.form.name);
-      console.log(this.form.password);
-      //TODO: 设置不同按钮，需要用户名密码同时输入才可以点击； 发送至后端valid， 成功跳转，失败弹出重试信息
       this.$refs.loginForm.validate(valid=>{
         if(valid){
           this.loginLoading=true;
@@ -138,7 +146,12 @@ export default {
                   if(res.code==='suc'){
                     //if login succeeds, save the token into Vuex
                     this.$store.commit('set_token',{token:res.token,userId:res.userId,name:res.data.name,role:res.data.role})
-                    // this.$router.push('/adminIndex');
+                    this.$router.push({
+                      name: 'AdminPage',
+                      params: {
+                        userName: this.form.name
+                      }
+                    })
                   }else{
                     ElMessageBox.alert(res.msg+", please re-login","Attention!",{
                       confirmButtonText:'OK'
@@ -256,9 +269,19 @@ export default {
   font-weight: bold;
 }
 
-.spliter {
+.grey {
   height: 5px;
   margin-top: 10px;
+}
+
+.yellow {
+  background-color: #f0c78a;
+  height: 3px;
+}
+
+.pink {
+  background-color: #f9a7a7;
+  height: 2px;
 }
 
 .app-body {
