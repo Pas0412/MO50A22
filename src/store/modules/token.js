@@ -21,7 +21,6 @@ const token={
             token:'',
             userId:'',
             name:'',
-            role:'',
             nowTime:'',
         },
     mutations:{
@@ -29,7 +28,6 @@ const token={
             state.token = object.token
             state.userId = object.userId
             state.name = object.name
-            state.role = object.role
             sessionStorage.token = object.token
         },
         del_token(state){
