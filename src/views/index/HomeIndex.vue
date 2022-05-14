@@ -59,7 +59,7 @@
 
     <div class="scroll">
       <div v-for="item in tabList" :key="item" >
-        <div class="container" :home="this.item">
+        <div class="container">
           <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
           <div class="plats-name">{{ item.name }}</div>
           <spliter class="plats-spliter"></spliter>
@@ -68,7 +68,7 @@
             <span class="text-right">{{ item.amount }}</span>
           </div>
           <div class="note">Notez-nous!</div>
-          <rate></rate>
+          <rate :home="item"></rate>
         </div>
       </div>
     </div>
@@ -129,10 +129,6 @@ export default {
     }
   },
   methods:{
-    rating(){
-      console.log(this.tabListitem.name);
-
-    },
     /**
     * @description: login handler
     * @author yong.huang@utbm.fr yuan.cao@utbm.fr
@@ -342,13 +338,10 @@ export default {
   opacity: 0.75;
 }
 
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
+.el-carousel__item {
+  background-color: ghostwhite;
 }
 
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
 
 .el-button--text {
   margin-right: 15px;
