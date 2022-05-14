@@ -45,11 +45,12 @@
   <div class="app-body">
     <div class="middle">
       <news></news>
+      <div class="divide-block"></div>
       <div class="popular">
         <span class="demonstration">Les plats les plus populaires</span>
         <el-carousel height="230px" v-model="carousel">
-          <el-carousel-item v-for="item in 4" :key="item">
-            <h3 class="small justify-center" text="2xl">{{ item }}</h3>
+          <el-carousel-item v-for="item in tabList" :key="item">
+            <img class="plats-popular" :src="item.imgurl" alt="popular">
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -60,10 +61,13 @@
       <div v-for="item in tabList" :key="item" >
         <div class="container" :home="this.item">
           <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
+          <div class="plats-name">{{ item.name }}</div>
+          <spliter class="plats-spliter"></spliter>
           <div class="text-container">
-            <span class="text-left">{{ item.name }}</span>
+            <span class="text-left">Il en reste encore :</span>
             <span class="text-right">{{ item.amount }}</span>
           </div>
+          <div class="note">Notez-nous!</div>
           <rate></rate>
         </div>
       </div>
@@ -181,12 +185,16 @@ export default {
      */
     init(){
       this.getAllPlatsFromServer();
+      this.getWaitingNbFromServer();
     },
     /**
     * @description: get all the data of plats from server
     * @author yuan.cao@utbm.fr
     * @date 2022-04-29 19:07:53
     */
+    getWaitingNbFromServer() {
+
+    },
     getAllPlatsFromServer(){
       this.$store.dispatch('GetAllPlats').then(res=>{
         // console.log(res);
@@ -301,11 +309,17 @@ export default {
   box-shadow: 2px 2px 2px grey;
 }
 
+.divide-block {
+  height: 300px;
+  width: 10px;
+  background-color: ghostwhite;
+}
+
 .popular {
   text-align: center;
   width: 1200px;
   margin-right: 50px;
-  margin-left: 50px;
+  margin-left: 100px;
   margin-top: 10px;
   height: 250px;
 }
@@ -320,6 +334,12 @@ export default {
   opacity: 0.75;
   line-height: 200px;
   text-align: center;
+}
+
+.plats-popular {
+  height: 250px;
+  width: 250px;
+  opacity: 0.75;
 }
 
 .el-carousel__item:nth-child(2n) {
@@ -360,10 +380,32 @@ export default {
   margin : 35px;
 }
 
+.plats-name {
+  font-size: 15px;
+}
+
+.plats-spliter {
+  background-color: #f9a7a7;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 .text-container {
   display: flex;
   width: 250px;
   justify-content: space-between;
+  text-align: center;
+  align-items: center;
+}
+
+.text-left {
+  font-size: 12px;
+  color: grey;
+}
+
+.note {
+  font-size: 12px;
+  color: grey;
 }
 
 .plats-img {

@@ -7,7 +7,7 @@
       :header-cell-style="{background:'aliceblue', color:'#606266'}">
     <el-table-column
         fixed
-        prop="date"
+        prop="time"
         label="Date"
         width="200"
         class="column-container"
@@ -31,34 +31,30 @@ export default {
   name : 'news',
   data() {
     return {
-      tableData: [{
-        date: '03/05/2022',
-        content: "La cantine se ferme aujourd'hui, bie lai bu ran wo zou ni"
-      },{
-        date: '03/05/2022',
-        content: "La cantine se ferme aujourd'hui"
-      },{
-        date: '03/05/2022',
-        content: "La cantine se ferme aujourd'hui"
-      },{
-        date: '03/05/2022',
-        content: "La cantine se ferme aujourd'hui"
-      },{
-        date: '03/05/2022',
-        content: "La cantine se ferme aujourd'hui"
-      },{
-        date: '03/05/2022',
-        content: "La cantine se ferme aujourd'hui"
-      },{
-        date: '03/05/2022',
-        content: "La cantine se ferme aujourd'hui"
-      },{
-        date: '03/05/2022',
-        content: "La cantine se ferme aujourd'hui"
-      },{
-        date: '03/05/2022',
-        content: "La cantine se ferme aujourd'hui"
-      },]
+      tableData: []
+    }
+  },
+  mounted() {
+    this.init();
+  },
+  methods: {
+    init() {
+      this.getNewsFromServer();
+    },
+    getNewsFromServer() {
+      this.$store.dispatch('GetNews').then(res=>{
+        if(res&&res.data){//to make sure the correct arrival of data
+          if(res.code==='suc'){
+            res.data.forEach((news)=>{
+              this.tableData.push(news)
+            })
+          }else{
+            console.log('server response error');
+          }
+        }
+      }).catch(err=>{
+        console.log(err)
+      })
     }
   }
 }

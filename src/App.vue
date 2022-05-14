@@ -10,7 +10,7 @@
   </div>
 
   <!--for test proposal, delete me !!!  -->
-  <h4>{{curWebSocketData}}</h4>
+<!--  <h4>{{curWebSocketData}}</h4>-->
 
 <!--  <HelloWorld msg="Welcome to Gestion de la cantine"/>-->
 </template>
