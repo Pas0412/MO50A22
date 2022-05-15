@@ -23,6 +23,7 @@
           <el-menu-item index="/AdminPage/platGeneralInfo">General Info</el-menu-item>
           <el-menu-item index="/AdminPage/platSimpleChange">Show Change</el-menu-item>
           <el-menu-item index="/AdminPage/platChange">Add Change</el-menu-item>
+          <el-menu-item index="/AdminPage/platDeleteHistory">Delete History</el-menu-item>
         </el-sub-menu>
         <el-menu-item index="/AdminPage/newsInfo">
           <el-icon><Notification /></el-icon>

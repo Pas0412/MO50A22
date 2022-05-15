@@ -86,7 +86,6 @@ export default {
      * @date 2022-05-14 22:30:00
      */
     saveCurWebSocket(){
-      console.log(this.curWebSocketData);
       sessionStorage.setItem('curWebSocketData', this.curWebSocketData);
     }
   }

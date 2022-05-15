@@ -1,3 +1,5 @@
+import {deletePlat, getAllDeletedPlats, realDeletePlat, restorePlat, updatePlat} from "@/network/admin/admin";
+
 /**
 * @description: used for admin page
 * @author yuan.cao@utbm.fr
@@ -73,6 +75,33 @@ const admin = {
                 }
             }
         },
+    },
+    actions:{
+        UpdatePlat(context,param){
+            return new Promise((resolve,reject)=>{
+                updatePlat(param).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        DeletePlat(context,param){
+            return new Promise((resolve,reject)=>{
+                deletePlat(param.id).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        RealDeletePlat(context,param){
+            return new Promise((resolve,reject)=>{
+                realDeletePlat(param.id).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        RestorePlat(context,param){
+            return new Promise((resolve,reject)=>{
+                restorePlat(param.id).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        GetAllDeletedPlats(){
+            return new Promise((resolve,reject)=>{
+                getAllDeletedPlats().then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        }
     }
 }
 export default admin

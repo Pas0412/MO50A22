@@ -16,6 +16,7 @@ const ErrorPage404 = () => import("@/views/common/ErrorPage404")
 const PlatGeneralInfo = () => import("@/views/admin/plat/PlatGeneralInfo")
 const PlatSimpleChange = () => import("@/views/admin/plat/PlatSimpleChange")
 const PlatChange = () => import("@/views/admin/plat/PlatChange")
+const PlatDeleteHistory = () => import("@/views/admin/plat/PlatDeleteHistory")
 const NewsInfo = () => import("@/views/admin/news/NewsInfo")
 
 const routes = [
@@ -70,6 +71,13 @@ const routes = [
                     title: 'Plat Add'
                 },
                 component: PlatChange
+            },
+            {
+                path:"platDeleteHistory",
+                meta: {
+                    title: 'Plat Delete'
+                },
+                component: PlatDeleteHistory
             },
             {
                 path:"newsInfo",

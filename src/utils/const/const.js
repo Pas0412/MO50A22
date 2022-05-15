@@ -16,6 +16,6 @@ const adminRoleId = 0
 //api const
 const baseURL = httpOrHttps+serverUrl
 const socketUrl = 'ws://'+serverUrl+'/ws/connection/'
-const sessionExpiredTime = 1000*10//30 min
+const sessionExpiredTime = 1000*60*30//30 min
 
 export {cantineID,refreshMenuInterval,adminRoleId,baseURL,socketUrl,sessionExpiredTime}
