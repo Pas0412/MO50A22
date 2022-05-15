@@ -10,7 +10,7 @@
   </div>
 
   <!--for test proposal, delete me !!!  -->
-<!--  <h4>{{curWebSocketData}}</h4>-->
+  <h4>{{curWebSocketData}}</h4>
 
 <!--  <HelloWorld msg="Welcome to Gestion de la cantine"/>-->
 </template>
@@ -44,9 +44,10 @@ export default {
       this.activeOnWatchState();
       window.addEventListener('unload',this.saveStateToken)
       window.addEventListener('load',this.clearStateToken)
+      this.saveCurWebSocket();
     },
     openSocketConnection(){
-      openSocket(cantineID)
+      openSocket(cantineID);
     },
     /**
     * @description: monitor : every ? seconds we execute...
@@ -78,6 +79,15 @@ export default {
     clearStateToken(){
       sessionStorage.removeItem('stateToken')
     },
+    /**
+     * @description: save curWebSocketData to vuex
+     * @author yong.huang@ubtm.fr
+     * @date 2022-05-14 22:30:00
+     */
+    saveCurWebSocket(){
+      console.log(this.curWebSocketData);
+      sessionStorage.setItem('curWebSocketData', this.curWebSocketData);
+    }
   }
 
 }

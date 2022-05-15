@@ -16,11 +16,13 @@ export default {
 name: "waitLine",
   data() {
     return{
-      waitNb: "30"
+      waitNb: null
     }
   },
   methods: {
     format(){
+      var cur = sessionStorage.getItem('curWebSocketData');
+      console.log(cur);
       return this.waitNb;
     }
   }
