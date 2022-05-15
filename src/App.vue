@@ -42,9 +42,14 @@ export default {
       sendThisOut(this)
       this.openSocketConnection()
       this.activeOnWatchState();
+<<<<<<< HEAD
       window.addEventListener('unload',this.saveStateToken)
       window.addEventListener('load',this.clearStateToken)
       this.saveCurWebSocket();
+=======
+      window.addEventListener('unload',this.saveState)
+      window.addEventListener('load',this.clearState)
+>>>>>>> 2f26196f (return to yesterday)
     },
     openSocketConnection(){
       openSocket(cantineID);
@@ -73,11 +78,13 @@ export default {
     * @author yuan.cao@utbm.fr
     * @date 2022-05-13 00:52:20
     */
-    saveStateToken(){
+    saveState(){
       sessionStorage.setItem('stateToken',JSON.stringify(this.$store.state.token))
+      sessionStorage.setItem('stateAdmin',JSON.stringify(this.$store.state.admin))
     },
-    clearStateToken(){
+    clearState(){
       sessionStorage.removeItem('stateToken')
+      sessionStorage.removeItem('stateAdmin')
     },
     /**
      * @description: save curWebSocketData to vuex
@@ -98,7 +105,7 @@ export default {
 html,body,#app{
   margin: 0;
   padding: 0;
-  height:100%;
+  height: 100%;
 }
 
 

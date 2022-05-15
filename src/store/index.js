@@ -9,6 +9,7 @@ import indexShow from "@/store/modules/indexShow";
 import user from "@/store/modules/user";
 import token from "@/store/modules/token";
 import news from "@/store/modules/news";
+import admin from "@/store/modules/admin";
 
 export default createStore({
     state: {
@@ -22,5 +23,6 @@ export default createStore({
         user,
         token,
         news
+        admin
     }
 })
