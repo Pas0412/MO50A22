@@ -145,12 +145,17 @@ export default {
                 if(res){//make sure there is response anyway
                   if(res.code==='suc'){
                     //if login succeeds, save the token into Vuex
-                    this.$store.commit('set_token',{token:res.token,userId:res.userId,name:res.data.name,role:res.data.role})
+                    this.$store.commit('set_token',{token:res.token,userId:res.userId,name:res.data.name})
+                    this.$store.commit('set_userInfo',{role:res.data.role,username:res.data.name})
+                    //delete by ycao 20220514 create vue warn
+                    // this.$router.push({
+                    //   name: 'AdminPage',
+                    //   params: {
+                    //     userName: this.form.name
+                    //   }
+                    // })
                     this.$router.push({
-                      name: 'AdminPage',
-                      params: {
-                        userName: this.form.name
-                      }
+                      path: '/AdminPage',
                     })
                   }else{
                     ElMessageBox.alert(res.msg+", please re-login","Attention!",{
@@ -163,7 +168,7 @@ export default {
                 }
               })
               .catch((err)=>{
-                console.log('login error:' + err);
+                console.log('login error: ' + err);
                 this.loginLoading=false;
               })
           return true;
