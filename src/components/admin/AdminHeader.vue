@@ -38,7 +38,8 @@
                             <el-dropdown-item divided command="logout">Déconnexion</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
-                </el-dropdown>
+                </el-dropdown>&nbsp;
+              <el-icon :size="15"><ArrowDown /></el-icon>
             </div>
         </div>
     </div>

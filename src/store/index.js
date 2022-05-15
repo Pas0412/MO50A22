@@ -22,7 +22,7 @@ export default createStore({
         indexShow,
         user,
         token,
-        news
+        news,
         admin
     }
 })

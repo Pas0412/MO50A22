@@ -8,10 +8,6 @@
     </router-view>
     <!-- cache component instances -->
   </div>
-
-  <!--for test proposal, delete me !!!  -->
-  <h4>{{curWebSocketData}}</h4>
-
 <!--  <HelloWorld msg="Welcome to Gestion de la cantine"/>-->
 </template>
 
@@ -42,14 +38,12 @@ export default {
       sendThisOut(this)
       this.openSocketConnection()
       this.activeOnWatchState();
-<<<<<<< HEAD
       window.addEventListener('unload',this.saveStateToken)
       window.addEventListener('load',this.clearStateToken)
       this.saveCurWebSocket();
-=======
       window.addEventListener('unload',this.saveState)
       window.addEventListener('load',this.clearState)
->>>>>>> 2f26196f (return to yesterday)
+
     },
     openSocketConnection(){
       openSocket(cantineID);

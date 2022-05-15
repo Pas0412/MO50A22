@@ -1,10 +1,12 @@
 <template>
-person
+  hello
 </template>
 
 <script>
+
 export default {
-  name: "PersonInfo"
+  name: "PersonInfo",
+
 }
 </script>
 

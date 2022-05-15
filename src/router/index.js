@@ -13,6 +13,10 @@ const PersonInfo = () => import("@/views/admin/PersonInfo")
 const AdminHome = () => import("@/views/admin/AdminHome")
 const ErrorPage403 = () => import("@/views/common/ErrorPage403")
 const ErrorPage404 = () => import("@/views/common/ErrorPage404")
+const PlatGeneralInfo = () => import("@/views/admin/plat/PlatGeneralInfo")
+const PlatSimpleChange = () => import("@/views/admin/plat/PlatSimpleChange")
+const PlatChange = () => import("@/views/admin/plat/PlatChange")
+const NewsInfo = () => import("@/views/admin/news/NewsInfo")
 
 const routes = [
     {
@@ -41,12 +45,39 @@ const routes = [
             {
                 path: "personInfo",
                 meta: {
-                    title: 'Person Info',
+                    title: 'Personnel',
                     permission: true,
                 },
                 component: PersonInfo
+            },
+            {
+                path:"platGeneralInfo",
+                meta: {
+                    title: 'Plat Info'
+                },
+                component: PlatGeneralInfo
+            },
+            {
+                path:"platSimpleChange",
+                meta: {
+                    title: 'Plat Change'
+                },
+                component: PlatSimpleChange
+            },
+            {
+                path:"platChange",
+                meta: {
+                    title: 'Plat Add'
+                },
+                component: PlatChange
+            },
+            {
+                path:"newsInfo",
+                meta: {
+                    title: 'News'
+                },
+                component: NewsInfo
             }
-
         ]
     },
     {

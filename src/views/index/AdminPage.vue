@@ -8,7 +8,9 @@
         <admin-sidebar></admin-sidebar>
       </div>
       <div class="router-view">
-        <admin-tags></admin-tags>
+        <div class="admin-tags">
+          <admin-tags></admin-tags>
+        </div>
         <router-view v-slot="{ Component }">
           <keep-alive :include="[]">
             <component :is="Component" />
@@ -44,10 +46,14 @@ export default {
   flex: 1;
   display: flex;
 }
-.sidebar{
-  flex: 1;
+.admin-tags{
+
 }
+/*.sidebar{*/
+/*  flex: 1;*/
+/*}*/
 .router-view{
-  flex: 6;
+  width: 100%;
+  height: 100%;
 }
 </style>
