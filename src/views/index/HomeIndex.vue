@@ -49,7 +49,7 @@
       <div class="popular">
         <span class="demonstration">Les plats les plus populaires</span>
         <el-carousel height="230px" v-model="carousel">
-          <el-carousel-item v-for="item in tabList" :key="item">
+          <el-carousel-item v-for="item in tabList.slice(0, 4)" :key="item">
             <img class="plats-popular" :src="item.imgurl" alt="popular">
           </el-carousel-item>
         </el-carousel>
@@ -68,7 +68,10 @@
             <span class="text-right">{{ item.amount }}</span>
           </div>
           <div class="note">Notez-nous!</div>
-          <rate :home="item"></rate>
+          <div class="note-component">
+            <rate :home="item"></rate>
+            <span class="note-text">{{ 'Total: ' + item.rate }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -84,6 +87,15 @@ import Rate from "@/components/rate";
 import WaitLine from "@/components/waitLine";
 import {ElMessageBox} from "element-plus";
 import AdminPage from "./AdminPage";
+
+
+function compare(p) {
+  return function(m, n){
+    var a = m[p];
+    var b = n[p];
+    return b - a;
+  }
+}
 
 export default {
   name: "HomeIndex",
@@ -138,8 +150,7 @@ export default {
       this.$refs.loginForm.validate(valid=>{
         if(valid){
           this.loginLoading=true;
-          this.$store
-              .dispatch('Login',this.form)
+          this.$store.dispatch('Login',this.form)
               .then(res=>{
                 this.loginLoading=false;
                 if(res){//make sure there is response anyway
@@ -186,16 +197,12 @@ export default {
      */
     init(){
       this.getAllPlatsFromServer();
-      this.getWaitingNbFromServer();
     },
     /**
     * @description: get all the data of plats from server
     * @author yuan.cao@utbm.fr
     * @date 2022-04-29 19:07:53
     */
-    getWaitingNbFromServer() {
-
-    },
     getAllPlatsFromServer(){
       this.$store.dispatch('GetAllPlats').then(res=>{
         // console.log(res);
@@ -210,7 +217,8 @@ export default {
         }
       }).catch(err=>{
         console.log(err)
-      })
+      }),
+      this.tabList.sort(compare("rate"));
     }
   },
 }
@@ -339,7 +347,7 @@ export default {
 
 .plats-popular {
   height: 250px;
-  width: 250px;
+  width: 300px;
   opacity: 0.75;
 }
 
@@ -404,6 +412,18 @@ export default {
 .note {
   font-size: 12px;
   color: grey;
+}
+
+.note-component {
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.note-text {
+  font-size: 15px;
+  color: orange;
 }
 
 .plats-img {

@@ -1,6 +1,6 @@
 <template>
   <div class="waitContainer">
-    <div class="waitHeader">Nombre de personnes à attendre</div>
+    <div class="waitHeader">{{ "Nombre de personnes à attendre" + this.waitNb }}</div>
     <div class="waitCircle">
       <el-progress type="circle" :percentage="0" v-if="waitNb >= 0 && waitNb <= 10" :format="format"></el-progress>
       <el-progress type="circle" :percentage="25" v-if="waitNb > 10 && waitNb <= 20" :format="format"></el-progress>
@@ -12,17 +12,32 @@
 </template>
 
 <script>
+let cur = sessionStorage.getItem('curWebSocketData');
+
+
 export default {
 name: "waitLine",
   data() {
     return{
-      waitNb: null
+      waitNb: null,
+    }
+  },
+  computed: {
+    test() {
+      if(cur != null) {
+        this.format();
+        return true;
+      }
+      return false;
     }
   },
   methods: {
     format(){
-      var cur = sessionStorage.getItem('curWebSocketData');
-      console.log(cur);
+      if(cur != null){
+        let obj = JSON.parse(cur);
+        this.waitNb = obj.data.numberOfPeople;
+        // console.log(obj.data.numberOfPeople);
+      }
       return this.waitNb;
     }
   }

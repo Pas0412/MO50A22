@@ -4,7 +4,7 @@
 * @date 2022-04-27 15:43:07
 * @version 1.0
 */
-import {getAllPlats} from "@/network/index";
+import {getAllPlats, postNewNote} from "@/network/index";
 
 const indexShow = {
     actions:{
@@ -12,6 +12,11 @@ const indexShow = {
             return new Promise((resolve,reject)=>{
                 getAllPlats().then(res=>resolve(res)).catch(err=>reject(err))
             })
+        },
+        PostNote(context, obj){
+            return new Promise((resolve,reject)=>{
+                    postNewNote(obj).then(res=>resolve(res)).catch(err=>reject(err))
+                })
         }
     }
 }

@@ -27,6 +27,11 @@ name: "rate",
   methods: {
     rating() {
       sessionStorage.setItem(this.home.id, this.note);
+      this.$store.dispatch('PostNote', {id: this.home.id, rate: this.note, ctimes: this.home.ctimes}).then(res=>{
+        console.log(res);
+      }).catch(err=>{
+        console.log(err);
+      })
     },
     init() {
       this.setRate();

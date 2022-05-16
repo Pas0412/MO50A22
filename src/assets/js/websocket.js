@@ -38,6 +38,7 @@ function openSocket(cantineID) {
     //获得消息事件
     vm.socketCon.onmessage = function(msg) {
         vm.curWebSocketData = msg.data;
+        vm.$forceUpdate();
         //发现消息进入,开始处理前端触发逻辑
     };
     //关闭事件
