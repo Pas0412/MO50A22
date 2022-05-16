@@ -1,12 +1,10 @@
 <template>
-  hello
+person
 </template>
 
 <script>
-
 export default {
-  name: "PersonInfo",
-
+  name: "PersonManager"
 }
 </script>
 

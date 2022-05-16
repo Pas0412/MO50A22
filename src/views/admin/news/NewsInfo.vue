@@ -1,12 +1,10 @@
 <template>
-  hello
+news
 </template>
 
 <script>
-
 export default {
-  name: "PersonInfo",
-
+  name: "NewsInfo"
 }
 </script>
 

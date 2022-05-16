@@ -15,12 +15,12 @@
         </ul>
         <div class="tags-close-box">
             <el-dropdown @command="handleTags">
-                <el-button size="mini" type="primary">
+                <el-button size="" type="primary">
                   Options
                     <i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <template #dropdown>
-                    <el-dropdown-menu size="small">
+                    <el-dropdown-menu size="">
                         <el-dropdown-item command="other">Close others</el-dropdown-item>
                         <el-dropdown-item command="all">Close all</el-dropdown-item>
                     </el-dropdown-menu>

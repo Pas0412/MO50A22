@@ -8,10 +8,6 @@
     </router-view>
     <!-- cache component instances -->
   </div>
-
-  <!--for test proposal, delete me !!!  -->
-  <h4>{{curWebSocketData}}</h4>
-
 <!--  <HelloWorld msg="Welcome to Gestion de la cantine"/>-->
 </template>
 
@@ -45,6 +41,9 @@ export default {
       window.addEventListener('unload',this.saveStateToken)
       window.addEventListener('load',this.clearStateToken)
       this.saveCurWebSocket();
+      window.addEventListener('unload',this.saveState)
+      window.addEventListener('load',this.clearState)
+
     },
     openSocketConnection(){
       openSocket(cantineID);
@@ -73,11 +72,13 @@ export default {
     * @author yuan.cao@utbm.fr
     * @date 2022-05-13 00:52:20
     */
-    saveStateToken(){
+    saveState(){
       sessionStorage.setItem('stateToken',JSON.stringify(this.$store.state.token))
+      sessionStorage.setItem('stateAdmin',JSON.stringify(this.$store.state.admin))
     },
-    clearStateToken(){
+    clearState(){
       sessionStorage.removeItem('stateToken')
+      sessionStorage.removeItem('stateAdmin')
     },
     /**
      * @description: save curWebSocketData to vuex
@@ -85,7 +86,6 @@ export default {
      * @date 2022-05-14 22:30:00
      */
     saveCurWebSocket(){
-      console.log(this.curWebSocketData);
       sessionStorage.setItem('curWebSocketData', this.curWebSocketData);
     }
   }
@@ -98,7 +98,7 @@ export default {
 html,body,#app{
   margin: 0;
   padding: 0;
-  height:100%;
+  height: 100%;
 }
 
 

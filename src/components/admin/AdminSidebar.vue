@@ -15,27 +15,19 @@
           <el-icon><House /></el-icon>
           <template #title>Home</template>
         </el-menu-item>
-        <el-sub-menu index="2">
+        <el-sub-menu>
           <template #title>
             <el-icon><Food /></el-icon>
-            <span>Navigator One</span>
+            <span>Plat</span>
           </template>
-          <el-menu-item-group>
-            <template #title><span>Group One</span></template>
-            <el-menu-item index="2-1">item one</el-menu-item>
-            <el-menu-item index="2-2">item two</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="Group Two">
-            <el-menu-item index="2-3">item three</el-menu-item>
-          </el-menu-item-group>
-          <el-sub-menu index="2-4">
-            <template #title><span>item four</span></template>
-            <el-menu-item index="2-4-1">item one</el-menu-item>
-          </el-sub-menu>
+          <el-menu-item index="/AdminPage/platGeneralInfo">General Info</el-menu-item>
+          <el-menu-item index="/AdminPage/platSimpleChange">Show Change</el-menu-item>
+          <el-menu-item index="/AdminPage/platChange">Add Change</el-menu-item>
+          <el-menu-item index="/AdminPage/platDeleteHistory">Delete History</el-menu-item>
         </el-sub-menu>
-        <el-menu-item index="3" disabled>
-          <el-icon><document /></el-icon>
-          <template #title>Navigator Three</template>
+        <el-menu-item index="/AdminPage/newsInfo">
+          <el-icon><Notification /></el-icon>
+          <template #title>News</template>
         </el-menu-item>
         <el-menu-item index="/AdminPage/personInfo" v-if="showPersonPage">
           <el-icon><User /></el-icon>
