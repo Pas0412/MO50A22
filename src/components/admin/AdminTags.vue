@@ -78,7 +78,7 @@ export default {
               return item.path === route.fullPath;
             });
           }
-          if (!isExist) {
+          if (!isExist&&route.path!=='/HomeIndex') {
             if (this.tagsList&&this.tagsList.length >= 8) {
               this.$store.commit("delTagsItem", { index: 0 });
             }

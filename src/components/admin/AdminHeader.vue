@@ -68,6 +68,7 @@ export default {
               this.$store.commit("del_token")
               this.$store.commit("del_time")
               this.$store.commit("del_userInfo")
+              this.$store.commit("clearTags")
               sessionStorage.removeItem("token")
               sessionStorage.removeItem("nowTime")
               this.$router.replace('/')

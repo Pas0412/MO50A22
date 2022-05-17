@@ -25,10 +25,14 @@
           <el-menu-item index="/AdminPage/platChange">Add Change</el-menu-item>
           <el-menu-item index="/AdminPage/platDeleteHistory">Delete History</el-menu-item>
         </el-sub-menu>
-        <el-menu-item index="/AdminPage/newsInfo">
-          <el-icon><Notification /></el-icon>
-          <template #title>News</template>
-        </el-menu-item>
+        <el-sub-menu>
+          <template #title>
+            <el-icon><Notification /></el-icon>
+            <span>News</span>
+          </template>
+          <el-menu-item index="/AdminPage/newsInfo">Edit News</el-menu-item>
+          <el-menu-item index="/AdminPage/addNews">Add news</el-menu-item>
+        </el-sub-menu>
         <el-menu-item index="/AdminPage/personInfo" v-if="showPersonPage">
           <el-icon><User /></el-icon>
           <template #title>Personnel management</template>

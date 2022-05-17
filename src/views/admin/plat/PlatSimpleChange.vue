@@ -4,7 +4,7 @@
       tabList.filter(
         (data) =>
           !search || data.name.toLowerCase().includes(search.toLowerCase())
-      )" height="800px" style="width: 100%">
+      )" height="100%" style="width: 100%">
     <el-table-column prop="id" label="ID" width="180" />
     <el-table-column prop="name" label="Name" width="180" />
     <el-table-column prop="type" label="Plat Type" />
@@ -140,6 +140,8 @@ export default {
 
 <style scoped>
 .simple-change{
+ height: calc(100% - 52px);
   margin: 15px 1px 0px;
+  width: 95%;
 }
 </style>

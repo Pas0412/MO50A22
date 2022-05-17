@@ -60,11 +60,11 @@ export default {
       this.getAllPlatsFromServer()
     },
     getAllPlatsFromServer(){
-      this.tabList=[];
       this.$store.dispatch('GetAllPlats').then(res=>{
         // console.log(res);
         if(res&&res.data){//to make sure the correct arrival of data
           if(res.code==='suc'){
+            this.tabList=[];
             res.data.forEach((plat)=>{
               this.tabList.push(plat)
             })

@@ -18,6 +18,7 @@ const PlatSimpleChange = () => import("@/views/admin/plat/PlatSimpleChange")
 const PlatChange = () => import("@/views/admin/plat/PlatChange")
 const PlatDeleteHistory = () => import("@/views/admin/plat/PlatDeleteHistory")
 const NewsInfo = () => import("@/views/admin/news/NewsInfo")
+const AddNews = () => import("@/views/admin/news/AddNews")
 
 const routes = [
     {
@@ -82,9 +83,16 @@ const routes = [
             {
                 path:"newsInfo",
                 meta: {
-                    title: 'News'
+                    title: 'News Change'
                 },
                 component: NewsInfo
+            },
+            {
+                path:"addNews",
+                meta: {
+                    title: 'News Add'
+                },
+                component: AddNews
             }
         ]
     },
