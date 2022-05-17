@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="admin-main-page">
         <el-row :gutter="20">
             <el-col :span="8">
                 <el-card shadow="hover" class="mgb20" style="height:252px;">
@@ -248,6 +248,10 @@ export default {
 </script>
 
 <style scoped>
+#admin-main-page{
+  height: calc(100% - 37px);
+  overflow: scroll;
+}
 .el-row {
     margin-bottom: 20px;
 }
