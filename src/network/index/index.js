@@ -23,3 +23,19 @@ export function getAllPlats(){
         }).then(data=>resolve(data)).catch(err=>reject(err))
     })
 }
+
+export function postNewNote(param){
+    return new Promise((resolve,reject)=>{
+        request({
+            url:'/updateComment',
+            method:'post',
+            params:{
+                id:param.id,
+                rate:param.rate,
+                ctimes:param.ctimes
+            }
+        }).then(data=>resolve(data)).catch(err=>reject(err))
+    })
+}
+
+

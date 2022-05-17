@@ -8,7 +8,10 @@
     </router-view>
     <!-- cache component instances -->
   </div>
-<!--  <HelloWorld msg="Welcome to Gestion de la cantine"/>-->
+
+  <!--for test proposal, delete me !!!  -->
+  <h4 v-if="isCurChanged">{{curWebSocketData}}</h4>
+
 </template>
 
 <script>
@@ -24,7 +27,17 @@ export default {
     return {
       socketCon:null,
       curWebSocketData:null,
+      //test proposal
+      // lastData:
       stateMonitor:null,
+    }
+  },
+  computed: {
+    isCurChanged(){
+      if(this.curWebSocketData != "connection succeeds"){
+        sessionStorage.setItem('curWebSocketData', JSON.stringify(JSON.parse(this.curWebSocketData)));
+      }
+      return false;
     }
   },
   methods: {
@@ -66,6 +79,7 @@ export default {
     changeState(){
       //do...
       //write your code here
+      this.curWebSocketData
     },
     /**
     * @description: to make sure each time refreshed, the data in the vuex does not disappear

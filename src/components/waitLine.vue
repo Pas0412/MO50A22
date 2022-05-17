@@ -1,30 +1,49 @@
 <template>
   <div class="waitContainer">
-    <div class="waitHeader">Nombre de personnes à attendre</div>
+    <div class="waitHeader">{{ "Nombre de personnes à attendre : " + this.waitNb }}</div>
     <div class="waitCircle">
-      <el-progress type="circle" :percentage="0" v-if="waitNb >= 0 && waitNb <= 10" :format="format"></el-progress>
-      <el-progress type="circle" :percentage="25" v-if="waitNb > 10 && waitNb <= 20" :format="format"></el-progress>
-      <el-progress type="circle" :percentage="100"  v-if="waitNb > 50" :format="format"></el-progress>
-      <el-progress type="circle" :percentage="70" v-if="waitNb > 30 && waitNb <= 40" :format="format"></el-progress>
-      <el-progress type="circle" :percentage="50"  v-if="waitNb > 20 && waitNb <= 30" :format="format" :width="150"></el-progress>
+      <el-progress type="circle" :percentage="0" v-if="waitTime >= 0 && waitTime <= 10" :format="format"></el-progress>
+      <el-progress type="circle" :percentage="25" v-if="waitTime > 10 && waitTime <= 20" :format="format"></el-progress>
+      <el-progress type="circle" :percentage="100"  v-if="waitTime > 50" :format="format"></el-progress>
+      <el-progress type="circle" :percentage="70" v-if="waitTime > 30 && waitTime <= 40" :format="format"></el-progress>
+      <el-progress type="circle" :percentage="50"  v-if="waitTime > 20 && waitTime <= 30" :format="format" :width="150"></el-progress>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
 name: "waitLine",
   data() {
     return{
-      waitNb: null
+      waitNb: null,
+      waitTime: null,
     }
   },
-  methods: {
-    format(){
-      var cur = sessionStorage.getItem('curWebSocketData');
-      console.log(cur);
-      return this.waitNb;
+  mounted() {
+    if(this.timer){
+      clearInterval(this.timer)
+    }else{
+      this.timer=setInterval(()=>{
+        this.loadData()
+      },6000)
     }
+  },
+  unmounted(){
+    clearInterval(this.timer)
+  },
+  methods: {
+    loadData() {
+      let cur = JSON.parse(sessionStorage.getItem('curWebSocketData'));
+      if (cur != "connection succeeds"){
+         this.waitNb = cur.data.numberOfPeople;
+         this.waitTime = Math.round(cur.data.waitTime/60);
+      }
+    },
+    format(){
+      return this.waitTime;
+    },
   }
 }
 </script>
