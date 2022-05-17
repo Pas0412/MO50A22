@@ -12,7 +12,7 @@
           <admin-tags></admin-tags>
         </div>
         <router-view v-slot="{ Component }">
-          <keep-alive :include="['PlatGeneralInfo','PlatSimpleChange']">
+          <keep-alive :include="['PlatGeneralInfo','PlatSimpleChange','PlatChange','NewsInfo']">
             <component :is="Component" />
           </keep-alive>
         </router-view>
@@ -48,6 +48,7 @@ export default {
 .control-cpn{
   flex: 1;
   display: flex;
+  height: calc(100% - 70px);
 }
 .admin-tags{
 

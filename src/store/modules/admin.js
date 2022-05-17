@@ -1,4 +1,13 @@
-import {deletePlat, getAllDeletedPlats, realDeletePlat, restorePlat, updatePlat} from "@/network/admin/admin";
+import {
+    addNews,
+    addPlat, deleteNews,
+    deletePlat,
+    getAllDeletedPlats,
+    realDeletePlat,
+    restorePlat, updateNews,
+    updatePlat,
+    uploadFile
+} from "@/network/admin/admin";
 
 /**
 * @description: used for admin page
@@ -101,7 +110,38 @@ const admin = {
             return new Promise((resolve,reject)=>{
                 getAllDeletedPlats().then(res=>resolve(res)).catch(err=>reject(err))
             })
-        }
+        },
+        /**
+        * @description: core code, upload file using qiniuyun cloud service
+        * @author yuan.cao@utbm.fr
+        * @date 2022-05-16 10:32:58
+        */
+        UploadFile(context,params){
+            return new Promise((resolve,reject)=>{
+                uploadFile(params).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        AddPlat(context,param){
+            return new Promise((resolve,reject)=>{
+                addPlat(param).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        /*news domain start*/
+        DeleteNews(context,param){
+            return new Promise((resolve,reject)=>{
+                deleteNews(param).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        UpdateNews(context,param){
+            return new Promise((resolve,reject)=>{
+                updateNews(param).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        AddNews(context,param){
+            return new Promise((resolve,reject)=>{
+                addNews(param).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
     }
 }
 export default admin

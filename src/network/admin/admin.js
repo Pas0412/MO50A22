@@ -1,5 +1,6 @@
 import {request} from "@/network/request";
-import {cantineID} from "@/utils/const/const";
+import {cantineID, uploadAddress} from "@/utils/const/const";
+import axios from "axios";
 
 /**
 * @description: admin ajax
@@ -69,6 +70,82 @@ export function getAllDeletedPlats(){
             method:'get',
             params:{
                 cid: cantineID
+            }
+        }).then(data=>resolve(data)).catch(err=>reject(err))
+    })
+}
+
+/**
+* @description: upload file using qiniuyun cloud
+* @author yuan.cao@utbm.fr
+* @date 2022-05-16 10:30:59
+*/
+export function uploadFile(params){
+    //use raw axios
+    return axios.post(uploadAddress,params,{
+        headers:{"content-type":"multipart/form-data"}
+    })
+}
+/**
+* @description: add a new plat
+* @author yuan.cao@utbm.fr
+* @date 2022-05-16 11:58:29
+*/
+export function addPlat(param){
+    return new Promise((resolve,reject)=>{
+        request({
+            url:'/admin/addPlat',
+            method:'post',
+            data:{
+                name:param.name,
+                content:param.content,
+                type:param.type,
+                day:param.day,
+                imgurl:param.imgurl,
+                cid:param.cid
+            }
+        }).then(data=>resolve(data)).catch(err=>reject(err))
+    })
+}
+/*news domain start*/
+/**
+* @description: delete all selected news
+* @author yuan.cao@utbm.fr
+* @date 2022-05-16 22:08:33
+*/
+export function deleteNews(selectedArr){
+    return new Promise((resolve,reject)=>{
+        request({
+            url:'/admin/deleteNews',
+            method:'post',
+            data:{
+                selectedArr
+            }
+        }).then(data=>resolve(data)).catch(err=>reject(err))
+    })
+}
+export function updateNews(param){
+    return new Promise((resolve,reject)=>{
+        request({
+            url:'/admin/updateNews',
+            method:'post',
+            data:{
+                id:param.id,
+                content:param.content,
+                time:param.time
+            }
+        }).then(data=>resolve(data)).catch(err=>reject(err))
+    })
+}
+export function addNews(param){
+    return new Promise((resolve,reject)=>{
+        request({
+            url:'/admin/addNews',
+            method:'post',
+            data:{
+                time:param.time,
+                content:param.content,
+                cid:param.cid
             }
         }).then(data=>resolve(data)).catch(err=>reject(err))
     })

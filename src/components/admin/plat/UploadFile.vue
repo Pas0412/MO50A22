@@ -1,6 +1,6 @@
-<!--只传单个文件-->
+<!--Only upload a single file-->
 <template>
-
+  <div id="upload-file">
     <el-upload
         class="upload-demo"
         drag
@@ -10,9 +10,9 @@
         v-loading="uploadLoading"
         element-loading-text="uploading..."
     >
-      <img class="upload-img" src="~assets/index/images/upload.svg" alt="upload">
+      <img class="upload-img" src="~assets/img/upload.svg" alt="upload">
       <div class="el-upload__text">
-        Drop file here or <em>click to upload</em>
+        Drop photo of plat here or <em>click to upload</em>
       </div>
       <template #tip>
         <div class="el-upload__tip">
@@ -20,37 +20,29 @@
         </div>
       </template>
     </el-upload>
-    <div class="list-container">
-      <div class="list-title">All uploaded files</div>
-      <uploaded-file-list :curUserId="curUserId"
-                          @doRefreshFileList="doRefresh"
-                          :key="childTimer" ref="ufl"></uploaded-file-list>
-    </div>
+  </div>
   </template>
 <script>
-import { UploadFilled } from '@element-plus/icons'
-import {Const} from "@/utils";
 import {ElMessageBox} from "element-plus";
-import UploadedFileList from "@/views/index/uploadFile/UploadedFileList";
+import {maxUploadFileSize, uploadAddress} from "@/utils/const/const";
 export default {
   name: "UploadFile",
   data(){
     return {
-      maxUploadFileSize:Const.maxUploadFileSize,
-       uploadAddress:Const.uploadAddress,
-      curUserId:this.$store.state.token.userId,
+      maxUploadFileSize:maxUploadFileSize,
+       uploadAddress:uploadAddress,
       uploadLoading:false,
-      childTimer:''
+      // childTimer:''
     }
   },
   methods:{
     uploadFileAccAction(params){
       this.uploadLoading=true;//使页面处于加载中
       const file = params.file,
-          fileType = file.type,
-          isImage = fileType.indexOf("image") != -1,
-          isLt2M = file.size /1024/1024<this.maxUploadFileSize;//文件大小是否小于限制
-      if(!isLt2M){
+          // fileType = file.type,
+          // isImage = fileType.indexOf("image") != -1,
+          isLtMB = file.size /1024/1024<this.maxUploadFileSize;//文件大小是否小于限制
+      if(!isLtMB){
         ElMessageBox.alert("The size of the file must less than "+this.maxUploadFileSize+"M",{
           confirmButtonText:'OK',
         })
@@ -59,8 +51,6 @@ export default {
       const form = new FormData();
       //file object
       form.append("file",file);
-      // form.append("curUserId","10")
-      form.append("curUserId",this.curUserId)
       this.$store.dispatch('UploadFile',form).then(res=>{
         let resJson = JSON.parse(res.request.response);//解析返回的json字符串
         if(resJson&&resJson.code==='fail'){
@@ -69,12 +59,13 @@ export default {
             callback:()=>{
               //pay attention to the order of the three phrases, sync action will come before async
               //so token is null when execute Logout
-              this.$router.replace('/login');
+              this.$router.replace('/');
             }
           })
-        };
+        }
+        this.$emit("uploadSuc",resJson.data)//upload success =, now return the url to his father
         this.uploadLoading=false//停止加载
-        this.childTimer = new Date().getTime()//force refresh file list
+        // this.childTimer = new Date().getTime()//force refresh file list
           }).catch(err=>{console.log(err);this.uploadLoading=false;})
     },
     uploadRes(err){
@@ -86,28 +77,10 @@ export default {
       this.childTimer = newTime;
     }
   },
-  mounted() {
-
-  },
-  created() {
-  },
-  components:{
-    UploadFilled,
-    UploadedFileList,
-  }
 }
 </script>
 
 <style scoped>
-.list-container{
-  margin-top: 50px;
-}
-.list-title{
-  font-size: 20px;
-  text-align: center;
-  color: blue;
-  margin-bottom: 20px;
-}
 .upload-demo{
   text-align: center;
   margin-top: 20px;
