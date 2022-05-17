@@ -1,45 +1,49 @@
 <template>
   <div class="waitContainer">
-    <div class="waitHeader">{{ "Nombre de personnes à attendre" + this.waitNb }}</div>
+    <div class="waitHeader">{{ "Nombre de personnes à attendre : " + this.waitNb }}</div>
     <div class="waitCircle">
-      <el-progress type="circle" :percentage="0" v-if="waitNb >= 0 && waitNb <= 10" :format="format"></el-progress>
-      <el-progress type="circle" :percentage="25" v-if="waitNb > 10 && waitNb <= 20" :format="format"></el-progress>
-      <el-progress type="circle" :percentage="100"  v-if="waitNb > 50" :format="format"></el-progress>
-      <el-progress type="circle" :percentage="70" v-if="waitNb > 30 && waitNb <= 40" :format="format"></el-progress>
-      <el-progress type="circle" :percentage="50"  v-if="waitNb > 20 && waitNb <= 30" :format="format" :width="150"></el-progress>
+      <el-progress type="circle" :percentage="0" v-if="waitTime >= 0 && waitTime <= 10" :format="format"></el-progress>
+      <el-progress type="circle" :percentage="25" v-if="waitTime > 10 && waitTime <= 20" :format="format"></el-progress>
+      <el-progress type="circle" :percentage="100"  v-if="waitTime > 50" :format="format"></el-progress>
+      <el-progress type="circle" :percentage="70" v-if="waitTime > 30 && waitTime <= 40" :format="format"></el-progress>
+      <el-progress type="circle" :percentage="50"  v-if="waitTime > 20 && waitTime <= 30" :format="format" :width="150"></el-progress>
     </div>
   </div>
 </template>
 
 <script>
-let cur = sessionStorage.getItem('curWebSocketData');
-
 
 export default {
 name: "waitLine",
   data() {
     return{
       waitNb: null,
+      waitTime: null,
     }
   },
-  computed: {
-    test() {
-      if(cur != null) {
-        this.format();
-        return true;
-      }
-      return false;
+  mounted() {
+    if(this.timer){
+      clearInterval(this.timer)
+    }else{
+      this.timer=setInterval(()=>{
+        this.loadData()
+      },6000)
     }
+  },
+  unmounted(){
+    clearInterval(this.timer)
   },
   methods: {
-    format(){
-      if(cur != null){
-        let obj = JSON.parse(cur);
-        this.waitNb = obj.data.numberOfPeople;
-        // console.log(obj.data.numberOfPeople);
+    loadData() {
+      let cur = JSON.parse(sessionStorage.getItem('curWebSocketData'));
+      if (cur != "connection succeeds"){
+         this.waitNb = cur.data.numberOfPeople;
+         this.waitTime = Math.round(cur.data.waitTime/60);
       }
-      return this.waitNb;
-    }
+    },
+    format(){
+      return this.waitTime;
+    },
   }
 }
 </script>

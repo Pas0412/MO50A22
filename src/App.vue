@@ -34,9 +34,8 @@ export default {
   },
   computed: {
     isCurChanged(){
-      if(this.curWebSocketData != null){
-        console.log(this.curWebSocketData);
-        sessionStorage.setItem('curWebSocketData', this.curWebSocketData);
+      if(this.curWebSocketData != "connection succeeds"){
+        sessionStorage.setItem('curWebSocketData', JSON.stringify(JSON.parse(this.curWebSocketData)));
       }
       return false;
     }
