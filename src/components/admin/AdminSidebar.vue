@@ -7,8 +7,6 @@
           class="el-menu-vertical-demo"
           :default-active="getRoutePath"
           text-color="#fff"
-          @open="handleOpen"
-          @close="handleClose"
           :router="true"
       >
         <el-menu-item index="/AdminPage/adminHome">
@@ -33,7 +31,7 @@
           <el-menu-item index="/AdminPage/newsInfo">Edit News</el-menu-item>
           <el-menu-item index="/AdminPage/addNews">Add news</el-menu-item>
         </el-sub-menu>
-        <el-menu-item index="/AdminPage/personInfo" v-if="showPersonPage">
+        <el-menu-item index="/AdminPage/personInfo" :disabled="!showPersonPage">
           <el-icon><User /></el-icon>
           <template #title>Personnel management</template>
         </el-menu-item>

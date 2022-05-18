@@ -150,3 +150,58 @@ export function addNews(param){
         }).then(data=>resolve(data)).catch(err=>reject(err))
     })
 }
+
+export function getAllUsers(){
+    return new Promise((resolve,reject)=>{
+        request({
+            url:'/admin/getAllUsers',
+            method:'get',
+            params:{
+                cid: cantineID
+            }
+        }).then(data=>resolve(data)).catch(err=>reject(err))
+    })
+}
+
+export function updatePwd(param){
+    return new Promise((resolve,reject)=>{
+        request({
+            url:'/admin/updatePwd',
+            method:'post',
+            params:{
+                id:param.id,
+                name:param.name,
+                oldPassword: param.oldPassword,
+                newPassword: param.newPassword
+            }
+        }).then(data=>resolve(data)).catch(err=>reject(err))
+    })
+}
+export function updateUser(param){
+    return new Promise((resolve,reject)=>{
+        request({
+            url:'/admin/updateUser',
+            method:'post',
+            data:{
+                id:param.id,
+                name:param.name,
+                role:param.role
+            }
+        }).then(data=>resolve(data)).catch(err=>reject(err))
+    })
+}
+
+export function addUser(param){
+    return new Promise((resolve,reject)=>{
+        request({
+            url:'/admin/addUser',
+            method:'post',
+            data:{
+                name:param.name,
+                password:param.password,
+                role:param.role,
+                cid:cantineID
+            }
+        }).then(data=>resolve(data)).catch(err=>reject(err))
+    })
+}

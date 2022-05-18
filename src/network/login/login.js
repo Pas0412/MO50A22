@@ -5,6 +5,7 @@
 * @version 1.0
 */
 import {request} from "@/network/request";
+import {cantineID} from "@/utils/const/const";
 
 export function login(name, password){
     return request({
@@ -12,7 +13,8 @@ export function login(name, password){
         method:'post',
         data:{
             name,
-            password
+            password,
+            cid:cantineID
         }
     })
 }

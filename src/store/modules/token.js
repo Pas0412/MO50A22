@@ -23,6 +23,10 @@ const token={
             name:'',
             nowTime:'',
         },
+    getters:{
+        userId:state=>state.userId,
+        name:state=>state.name,
+    },
     mutations:{
         set_token(state,object){
             state.token = object.token

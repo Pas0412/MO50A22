@@ -1,14 +1,13 @@
 import {
     addNews,
-    addPlat, deleteNews,
+    addPlat, addUser, deleteNews,
     deletePlat,
-    getAllDeletedPlats,
+    getAllDeletedPlats, getAllUsers,
     realDeletePlat,
     restorePlat, updateNews,
-    updatePlat,
+    updatePlat, updatePwd, updateUser,
     uploadFile
 } from "@/network/admin/admin";
-
 /**
 * @description: used for admin page
 * @author yuan.cao@utbm.fr
@@ -140,6 +139,27 @@ const admin = {
         AddNews(context,param){
             return new Promise((resolve,reject)=>{
                 addNews(param).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        /*person domain start*/
+        GetAllUsers(){
+            return new Promise((resolve,reject)=>{
+                getAllUsers().then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        UpdatePwd(context,param){
+            return new Promise((resolve,reject)=>{
+                updatePwd(param).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        UpdateUser(context,param){
+            return new Promise((resolve,reject)=>{
+                updateUser(param).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        AddUser(context,param){
+            return new Promise((resolve,reject)=>{
+                addUser(param).then(res=>resolve(res)).catch(err=>reject(err))
             })
         },
     }

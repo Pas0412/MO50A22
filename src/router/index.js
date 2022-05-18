@@ -9,7 +9,7 @@ import {adminRoleId} from "@/utils/const/const";
 */
 const HomeIndex = () => import('@/views/index/HomeIndex')
 const AdminPage = () => import("@/views/index/AdminPage")
-const PersonInfo = () => import("@/views/admin/PersonInfo")
+const PersonInfo = () => import("@/views/admin/person/PersonInfo")
 const AdminHome = () => import("@/views/admin/AdminHome")
 const ErrorPage403 = () => import("@/views/common/ErrorPage403")
 const ErrorPage404 = () => import("@/views/common/ErrorPage404")
