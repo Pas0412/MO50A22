@@ -114,6 +114,7 @@
 import Schart from "vue-schart";
 import {adminRoleId, cantineID, intervalUpdateDataAdminIndexDev} from "@/utils/const/const";
 import {ElMessageBox} from "element-plus";
+import {random} from "@/utils/CommonUtils";
 export default {
     name: "AdminDashboard",
   mounted() {
@@ -352,9 +353,10 @@ export default {
         if(this.options.labels.length>maxNum
             ||this.options.datasets[0].data>maxNum
             ||this.options.datasets[1].data>maxNum) {
-          this.options.labels.splice(maxNum / 2, 1)
-          this.options.datasets[0].data.splice(maxNum / 2, 1)
-          this.options.datasets[1].data.splice(maxNum / 2, 1)
+          const outNum = random(1,maxNum);
+          this.options.labels.splice(outNum, 1)
+          this.options.datasets[0].data.splice(outNum, 1)
+          this.options.datasets[1].data.splice(outNum, 1)
         }
 
       }

@@ -27,7 +27,7 @@
 
 <script>
 import {ElMessageBox} from "element-plus";
-import formatDate from "@/utils/CommonUtils";
+import {formatDate} from "@/utils/CommonUtils";
 
 export default {
   name: "NewsEditor",
