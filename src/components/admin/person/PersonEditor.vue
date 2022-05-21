@@ -12,8 +12,10 @@
             :rows="10"
             placeholder="Please input the name"
         />
-        <el-radio v-model="editUserForm.role" label="0" size="large">0: Director</el-radio>
-        <el-radio v-model="editUserForm.role" label="1" size="large">1: Staff</el-radio>
+        <el-radio-group v-model="editUserForm.role">
+          <el-radio :label=0 size="large">0: Director</el-radio>
+          <el-radio :label=1 size="large">1: Staff</el-radio>
+        </el-radio-group>
         <div class="commit-person-btn">
            <el-button :disabled="!isFilled" type="primary" @click="commitUser"
            >Commit Change</el-button
@@ -82,7 +84,7 @@ export default {
   },
   computed:{
     isFilled() {
-      return this.editUserForm.name && this.editUserForm.role;
+      return this.editUserForm.name;
     },
   },
   watch:{

@@ -62,7 +62,7 @@ const routes = [
             {
                 path:"platSimpleChange",
                 meta: {
-                    title: 'Plat Change'
+                    title: 'Plat Edit'
                 },
                 component: PlatSimpleChange
             },
@@ -76,7 +76,7 @@ const routes = [
             {
                 path:"platDeleteHistory",
                 meta: {
-                    title: 'Plat Delete'
+                    title: 'Plat Activate'
                 },
                 component: PlatDeleteHistory
             },

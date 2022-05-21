@@ -27,7 +27,7 @@ name: "waitLine",
     }else{
       this.timer=setInterval(()=>{
         this.loadData()
-      },6000)
+      },1000)
     }
   },
   unmounted(){

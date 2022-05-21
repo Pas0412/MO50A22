@@ -12,6 +12,9 @@ const serverUrl = '127.0.0.1:8084'
 const cantineID = '1'
 const refreshMenuInterval = 100 //the interval to refresh the menu
 const adminRoleId = 0
+const universityWebsite = 'https://www.utbm.fr'
+const intervalUpdateDataAdminIndexProd = 1000*60*3
+const intervalUpdateDataAdminIndexDev = 1000*2
 
 //api const
 const baseURL = httpOrHttps+serverUrl
@@ -22,5 +25,13 @@ const sessionExpiredTime = 1000*60*30//30 min
 const uploadAddress = baseURL+'/admin/uploadFile'
 const maxUploadFileSize = 100
 
-
-export {cantineID,refreshMenuInterval,adminRoleId,baseURL,socketUrl,uploadAddress,maxUploadFileSize,sessionExpiredTime}
+//mitt constant
+/**
+ * to resolve the bug:
+ * after login succeeds, before the data returned from the backend is set into vuex,
+ * the method showPersonPage from (AdminSidebar.vue?b98b:84:1) needs the data from vuex,
+ * so it gets null, causes error for json parsing
+ * @type {string}
+ */
+const ADMIN_SHOW_AFTER_LOGIN_DATA_RETURN = "login_show";
+export {cantineID,refreshMenuInterval,adminRoleId,universityWebsite,intervalUpdateDataAdminIndexDev,intervalUpdateDataAdminIndexProd,baseURL,socketUrl,uploadAddress,maxUploadFileSize,sessionExpiredTime,ADMIN_SHOW_AFTER_LOGIN_DATA_RETURN}

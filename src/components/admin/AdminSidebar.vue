@@ -19,9 +19,9 @@
             <span>Plat</span>
           </template>
           <el-menu-item index="/AdminPage/platGeneralInfo">General Info</el-menu-item>
-          <el-menu-item index="/AdminPage/platSimpleChange">Show Change</el-menu-item>
-          <el-menu-item index="/AdminPage/platChange">Add Change</el-menu-item>
-          <el-menu-item index="/AdminPage/platDeleteHistory">Delete History</el-menu-item>
+          <el-menu-item index="/AdminPage/platSimpleChange">Edit Plat</el-menu-item>
+          <el-menu-item index="/AdminPage/platChange">Add Plat</el-menu-item>
+          <el-menu-item index="/AdminPage/platDeleteHistory">Inactive List</el-menu-item>
         </el-sub-menu>
         <el-sub-menu>
           <template #title>
@@ -29,7 +29,7 @@
             <span>News</span>
           </template>
           <el-menu-item index="/AdminPage/newsInfo">Edit News</el-menu-item>
-          <el-menu-item index="/AdminPage/addNews">Add news</el-menu-item>
+          <el-menu-item index="/AdminPage/addNews">Add News</el-menu-item>
         </el-sub-menu>
         <el-menu-item index="/AdminPage/personInfo" :disabled="!showPersonPage">
           <el-icon><User /></el-icon>

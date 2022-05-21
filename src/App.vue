@@ -2,7 +2,7 @@
   <div id="app">
     <!--  cache component instances  -->
     <router-view v-slot="{ Component }">
-      <keep-alive :include="[]">
+      <keep-alive :include="['HomeIndex']">
         <component :is="Component" />
       </keep-alive>
     </router-view>
@@ -79,7 +79,6 @@ export default {
     changeState(){
       //do...
       //write your code here
-      this.curWebSocketData
     },
     /**
     * @description: to make sure each time refreshed, the data in the vuex does not disappear
