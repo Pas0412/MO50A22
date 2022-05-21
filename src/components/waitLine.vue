@@ -1,6 +1,9 @@
 <template>
   <div class="waitContainer">
-    <div class="waitHeader">{{ "Nombre de personnes à attendre : " + this.waitNb }}</div>
+    <div class="wait-header">{{ "Nombre de personnes"}}</div>
+    <div class="wait-middle">{{ "à attendre : "}}</div>
+    <div class="wait-footer" v-if="this.waitNb != null">{{ this.waitNb }}</div>
+    <div class="wait-spliter"></div>
     <div class="waitCircle">
       <el-progress type="circle" :percentage="0" v-if="waitTime >= 0 && waitTime <= 10" :format="format"></el-progress>
       <el-progress type="circle" :percentage="25" v-if="waitTime > 10 && waitTime <= 20" :format="format"></el-progress>
@@ -27,7 +30,7 @@ name: "waitLine",
     }else{
       this.timer=setInterval(()=>{
         this.loadData()
-      },6000)
+      },2000)
     }
   },
   unmounted(){
@@ -36,13 +39,21 @@ name: "waitLine",
   methods: {
     loadData() {
       let cur = JSON.parse(sessionStorage.getItem('curWebSocketData'));
-      if (cur != "connection succeeds"){
-         this.waitNb = cur.data.numberOfPeople;
-         this.waitTime = Math.round(cur.data.waitTime/60);
+      if (cur != "connection succeeds"|| cur != null){
+        if(cur.msg == "people") {
+          // console.log(cur)
+          this.waitNb = cur.data.numberOfPeople;
+          this.waitTime = Math.round(cur.data.waitTime / 60);
+        }
       }
     },
-    format(){
-      return this.waitTime;
+    format() {
+      if (this.waitTime != null) {
+        return this.waitTime + " min";
+        }
+      else{
+        return "";
+      }
     },
   }
 }
@@ -59,15 +70,36 @@ name: "waitLine",
   border-left-style: solid;
   border-left-width: 5px;
 }
-.waitHeader {
+
+.wait-header {
   text-align: center;
+  font-size: 15px;
   padding-top: 20px;
-  padding-bottom: 20px;
 }
+
+.wait-middle {
+  text-align: center;
+  font-size: 15px;
+}
+
+.wait-footer {
+  text-align: center;
+  font-size: 16px;
+}
+
 .waitCircle {
   position: relative;
   text-align: center;
   width: 200px;
+  font-size: 20px;
   font-weight: bold;
+}
+
+.wait-spliter {
+  height: 1px;
+  width: 100px;
+  background-color: grey;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 </style>

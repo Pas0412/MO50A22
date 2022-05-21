@@ -79,7 +79,6 @@ export default {
     changeState(){
       //do...
       //write your code here
-      this.curWebSocketData
     },
     /**
     * @description: to make sure each time refreshed, the data in the vuex does not disappear

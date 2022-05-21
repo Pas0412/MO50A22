@@ -15,9 +15,10 @@
     >
     </el-table-column>
     <el-table-column
+        fixed
         prop="content"
         label="Content"
-        width="400"
+        width="350"
         class="column-container"
         show-overflow-tooltip
     >

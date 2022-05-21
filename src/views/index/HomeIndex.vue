@@ -1,11 +1,21 @@
 <template>
   <div class="header">
-    <div class="logo">
-      <img class="logo-image" alt="project logo" src="../../assets/logo.png">
-      <div class="title">
-        <div class="projName">GCUF</div>
-        <div class="slogan">Un passage fluide et sans surprise pour un repas serein</div>
+    <div class="main">
+      <div class="logo">
+        <img class="logo-image" alt="project logo" src="../../assets/logo.png">
+        <div class="title">
+          <div class="core-container">
+            <span class="co">Co</span>
+            <span class="re">Re</span>
+          </div>
+          <div class="cdr-container">
+            <span class="co">Compagnon</span>
+            <span class="de"> de </span>
+            <span class="re">Repas</span>
+          </div>
+        </div>
       </div>
+      <div class="slogan">Un passage fluide et sans surprise pour un repas serein</div>
     </div>
     <div class="header-right-container">
       <el-button class="header-button" @click="drawer = true" type="primary">About us</el-button>
@@ -49,7 +59,7 @@
       <div class="popular">
         <span class="demonstration">Les plats les plus populaires</span>
         <el-carousel height="230px" v-model="carousel">
-          <el-carousel-item v-for="item in tabList.slice(0, 4)" :key="item">
+          <el-carousel-item v-for="item in indexList.slice(0, 4)" :key="item">
             <img class="plats-popular" :src="item.imgurl" alt="popular">
           </el-carousel-item>
         </el-carousel>
@@ -104,7 +114,8 @@ export default {
   data() {
     return {
       carousel: 0,
-      tabList: [],
+      tabList: [],  //all plats
+      indexList: [], //for popular plats
       drawer: false,
       direction: 'rtl',
       //used for login, carry the username and password
@@ -134,6 +145,16 @@ export default {
   },
   mounted() {
     this.init();
+    if(this.timer){
+      clearInterval(this.timer)
+    }else{
+      this.timer=setInterval(()=>{
+        this.loadData()
+      },2000)
+    }
+  },
+  unmounted(){
+    clearInterval(this.timer)
   },
   computed: {
     isFilled() {
@@ -146,6 +167,18 @@ export default {
     * @author yong.huang@utbm.fr yuan.cao@utbm.fr
     * @date 2022-05-12 17:53:58
     */
+    loadData() {
+      let cur = JSON.parse(sessionStorage.getItem('curWebSocketData'));
+      if (cur != "connection succeeds"|| cur != null){
+        if(cur.msg == "plat") {
+          for(let i = 0; i < this.tabList.length-1;i++){
+            if(JSON.stringify(this.tabList[i].id) == cur.data.pid){
+              this.tabList[i].amount = cur.data.weightOrNumber;
+            }
+          }
+        }
+      }
+    },
     login(){
       this.$refs.loginForm.validate(valid=>{
         if(valid){
@@ -218,7 +251,8 @@ export default {
       }).catch(err=>{
         console.log(err)
       }),
-      this.tabList.sort(compare("rate"));
+      this.indexList = this.tabList;
+      this.indexList.sort(compare("rate"));
     }
   },
 }
@@ -256,11 +290,32 @@ export default {
   margin-left: 10px;
 }
 
-.projName {
-  font-size: 30px;
+.core-container {
+  display: flex;
+  flex-direction: row;
+  font-size: 40px;
+  line-height: 35px;
+  padding-top: 5px;
+}
+
+.co {
+  color: #f0c78a;
+}
+
+.re {
+  color: #f9a7a7;
+}
+
+.de {
+  color: grey;
+}
+
+.cdr-container {
+  font-size: 1px;
 }
 
 .slogan {
+  padding-left: 8px;
   font-size: 8px;
   color: grey;
 }
