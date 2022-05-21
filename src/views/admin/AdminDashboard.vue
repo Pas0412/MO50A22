@@ -56,7 +56,7 @@
                                 <i class="el-icon-user-solid grid-con-icon"></i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">{{waitNb}}</div>
-                                    <div>Current number of people</div>
+                                    <div>Current number of people in the queue</div>
                                 </div>
                             </div>
                         </el-card>
@@ -149,7 +149,7 @@ export default {
           options: {
             type: "line",
             title: {
-              text: "Canteen Flow Chart"
+              text: "Canteen Queue Flow Chart"
             },
             labels: [],
             datasets: [

@@ -128,7 +128,7 @@ router.beforeEach((to, from, next) => {
     if(to.path==='/'||to.path==='/HomeIndex'){
         document.title = 'Cantine Universitée';
     }else{
-        document.title = `${to.meta.title} | GCUF`;
+        document.title = `${to.meta.title} | CoRe`;
     }
     //it is a proxy now
     let role = store.getters.role
