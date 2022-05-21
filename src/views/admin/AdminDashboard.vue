@@ -112,7 +112,7 @@
 
 <script>
 import Schart from "vue-schart";
-import {adminRoleId, cantineID, intervalUpdateDataAdminIndexDev} from "@/utils/const/const";
+import {adminRoleId, cantineID, intervalUpdateDataAdminIndexDev, maxNumForChart} from "@/utils/const/const";
 import {ElMessageBox} from "element-plus";
 import {random} from "@/utils/CommonUtils";
 export default {
@@ -121,14 +121,17 @@ export default {
       this.init()
   },
   unmounted(){
-    clearInterval(this.timerNum)
     clearInterval(this.timerChart)
   },
   data() {
         return {
+          historyTimeArr:[],
+          historyInArr:[],
+          historyOutArr:[],
+          curIndex:0,
+          takeConst:1,//if {curIndex} pass this value, should reform the chart
           waitNb:0,
           waitTime:0,
-          timerNum:null,
           timerChart:null,
           name: this.$store.getters.username,
           tabList: [],
@@ -193,26 +196,55 @@ export default {
       init(){
         this.getLeastPlatsFromServer()
         this.getCanteenInfoFromServer()
-        this.openTimerForUpdateNum()
         this.openTimerForUpdateChart()
         this.getHistoryDataForChart()
       },
+      /**
+      * @description: curIndex continue to grow, which means for example 98 = 10*9+8 ,
+       * 8 is the maximum of the curIndex, when it comes to it, the interval should be changed,
+       * so comes into doGiveDataForChart()
+      * @author yuan.cao@utbm.fr
+      * @date 2022-05-21 22:38:49
+      */
+      updateChartFromSessionSto(){
+        let cur = JSON.parse(sessionStorage.getItem('curWebSocketData'))
+        if (cur&&cur != "connection succeeds"&&cur.msg==='people'){
+          this.curIndex+=1;
+          this.historyTimeArr.push(this.getFormatTime())
+          this.historyInArr.push(cur.data.totalIn)
+          this.historyOutArr.push(cur.data.totalOut)
+          //when server first starts, the length of array is so small that grows like 0,1,2,
+          //the data in it should also be shown on the chart
+          if(this.historyInArr.length<=maxNumForChart||this.curIndex>=this.takeConst){
+            this.doGiveDataForChart()
+          }
+          this.waitNb = cur.data.numberOfPeople;
+          this.waitTime = Math.round(cur.data.waitTime/60);
+        }
+      },
+      /**
+      * @description: to avoid each time open browser the chart starts from 0, we get the history data from server,
+       * the maximum data of chart is {maxNumForChart} so delete one if pass the limit
+      * @author yuan.cao@utbm.fr
+      * @date 2022-05-21 20:10:31
+      */
       getHistoryDataForChart(){
         this.$store.dispatch('GetNumHistory').then(res => {
           if (res && res.data) {//to make sure the correct arrival of data
             if (res.code === 'suc') {
-              res.data[0].forEach(e=>{
-                let time = Object.keys(e)[0];
-                let inNum = Object.values(e)[0];
-                this.checkLengthChartDataArr(8);
-                this.options.labels.push(time);
-                this.options.datasets[0].data.push(inNum)
-              });
-              res.data[1].forEach(e=>{
-                let outNum = Object.values(e)[0];
-                this.checkLengthChartDataArr(8);
-                this.options.datasets[1].data.push(outNum)
-              });
+              if(res.data[0]&&res.data[1]){//when server starts first time, there is no data
+                res.data[0].forEach(e=>{
+                  let time = Object.keys(e)[0];
+                  let inNum = Object.values(e)[0];
+                  this.historyTimeArr.push(time)
+                  this.historyInArr.push(inNum)
+                });
+                res.data[1]&&res.data[1].forEach(e=>{
+                  let outNum = Object.values(e)[0];
+                  this.historyOutArr.push(outNum)
+                });
+                this.doGiveDataForChart()
+              }
             } else {
               console.log('server response error');
             }
@@ -221,21 +253,57 @@ export default {
           console.log(err)
         })
       },
-      openTimerForUpdateNum(){
-        if(this.timerNum){
-          clearInterval(this.timerNum)
-        }else{
-          this.timerNum=setInterval(()=>{
-            this.updateNumUp();
-          },2000)
+      /**
+      * @description: give the data to the chart, make sure the interval between x is acceptable = {takeConst}
+      * @author yuan.cao@utbm.fr
+      * @date 2022-05-21 20:48:39
+      */
+      doGiveDataForChart(){
+        const tmpTimeArr=this.historyTimeArr;
+        const tmpInArr=this.historyInArr;
+        const tmpOutArr=this.historyOutArr;
+        if(tmpTimeArr.length!==tmpInArr.length||tmpTimeArr.length===0) {
+          console.log("never return after initialisation");
+          return;
         }
+
+        /**
+         * for example
+         * array[98] 98/8=12...2       0 12 24 36 48 60 72 84 96(no) => 9-1 values
+         * @type {number}
+         */
+        const curInterval = Math.floor(tmpInArr.length/maxNumForChart)
+        this.takeConst =  curInterval===0
+            ?1
+            :curInterval;//include 0
+        this.curIndex = tmpInArr.length%maxNumForChart;
+
+        let newIndex = 0;
+        const newTimeArr = [];
+        const newInArr = [];
+        const newOutArr = [];
+        if(this.takeConst===0) return;//avoid infinite loop
+        /**
+         * loop array[98]: until 96
+         */
+        const upper = maxNumForChart*this.takeConst<tmpTimeArr.length
+            ?maxNumForChart*this.takeConst:tmpTimeArr.length;//server start
+        while(newIndex<upper){
+          newTimeArr.push(tmpTimeArr[newIndex])
+          newInArr.push(tmpInArr[newIndex])
+          newOutArr.push(tmpOutArr[newIndex])
+          newIndex+=this.takeConst;
+        }
+        this.options.labels=newTimeArr;
+        this.options.datasets[0].data=newInArr;
+        this.options.datasets[1].data=newOutArr;
       },
       openTimerForUpdateChart(){
         if(this.timerChart){
           clearInterval(this.timerChart)
         }else{
           this.timerChart=setInterval(()=>{
-            this.updateSchart();
+            this.updateChartFromSessionSto();
           },intervalUpdateDataAdminIndexDev)
         }
       },
@@ -315,23 +383,13 @@ export default {
       * @author yuan.cao@utbm.fr
       * @date 2022-05-20 22:51:20
       */
-      updateNumUp() {
-        let cur = JSON.parse(sessionStorage.getItem('curWebSocketData'));
-        if (cur&&cur != "connection succeeds"&&cur.msg==='people'){
-          this.waitNb = cur.data.numberOfPeople;
-          this.waitTime = Math.round(cur.data.waitTime/60);
-        }
-      },
-      updateSchart(){
-        /*update chart*/
-        let cur = JSON.parse(sessionStorage.getItem('curWebSocketData'));
-        if (cur&&cur != "connection succeeds"&&cur.msg==='people'){
-          this.checkLengthChartDataArr(8);
-          this.options.labels.push(this.getFormatTime());
-          this.options.datasets[0].data.push(cur.data.totalIn)
-          this.options.datasets[1].data.push(cur.data.totalOut)
-        }
-      },
+      // updateNumUp() {
+      //   let cur = JSON.parse(sessionStorage.getItem('curWebSocketData'));
+      //   if (cur&&cur != "connection succeeds"&&cur.msg==='people'){
+      //     this.waitNb = cur.data.numberOfPeople;
+      //     this.waitTime = Math.round(cur.data.waitTime/60);
+      //   }
+      // },
       /**
       * @description: get current time : HH:mm
       * @author yuan.cao@utbm.fr
@@ -349,11 +407,11 @@ export default {
       * @author yuan.cao@utbm.fr
       * @date 2022-05-21 01:23:23
       */
-      checkLengthChartDataArr(maxNum){
-        if(this.options.labels.length>maxNum
-            ||this.options.datasets[0].data>maxNum
-            ||this.options.datasets[1].data>maxNum) {
-          const outNum = random(1,maxNum);
+      checkLengthChartDataArr(){
+        if(this.options.labels.length>maxNumForChart
+            ||this.options.datasets[0].data>maxNumForChart
+            ||this.options.datasets[1].data>maxNumForChart) {
+          const outNum = random(1,maxNumForChart);
           this.options.labels.splice(outNum, 1)
           this.options.datasets[0].data.splice(outNum, 1)
           this.options.datasets[1].data.splice(outNum, 1)
@@ -369,6 +427,8 @@ export default {
   margin-top: 15px;
   height: calc(100% - 52px);
   width: 95%;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .card-header {
   display: flex;
