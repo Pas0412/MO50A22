@@ -13,7 +13,7 @@
           <el-icon><House /></el-icon>
           <template #title>Home</template>
         </el-menu-item>
-        <el-sub-menu>
+        <el-sub-menu index="/AdminPage/platGeneralInfo">
           <template #title>
             <el-icon><Food /></el-icon>
             <span>Plat</span>
@@ -23,7 +23,7 @@
           <el-menu-item index="/AdminPage/platChange">Add Plat</el-menu-item>
           <el-menu-item index="/AdminPage/platDeleteHistory">Inactive List</el-menu-item>
         </el-sub-menu>
-        <el-sub-menu>
+        <el-sub-menu index="/AdminPage/newsInfo">
           <template #title>
             <el-icon><Notification /></el-icon>
             <span>News</span>

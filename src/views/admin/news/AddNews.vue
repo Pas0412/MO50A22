@@ -27,7 +27,7 @@ export default {
   name: "AddNews",
   data(){
     return {
-      dateValue:"",
+      dateValue:new Date(),
       editNewsForm:{}
     }
   },

@@ -34,7 +34,7 @@ export default {
   data(){
     return {
       closeFlag:false,
-      dateValue:"",
+      dateValue:new Date(),
       editNewsForm:"",
     }
   },
