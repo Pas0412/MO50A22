@@ -12,7 +12,7 @@
           <admin-tags></admin-tags>
         </div>
         <router-view v-slot="{ Component }">
-          <keep-alive :include="['AdminHome','PlatGeneralInfo','PlatSimpleChange','PlatChange','NewsInfo']">
+          <keep-alive :include="['PlatGeneralInfo','PlatSimpleChange','PlatChange','NewsInfo']">
             <component :is="Component" />
           </keep-alive>
         </router-view>
