@@ -1,7 +1,7 @@
 import {
     addNews,
     addPlat, addUser, deleteNews,
-    deletePlat,
+    deletePlat, deleteUser,
     getAllDeletedPlats, getAllUsers, getCanteenInfo, getLeastPlats, getNumHistory,
     realDeletePlat,
     restorePlat, updateNews,
@@ -173,6 +173,11 @@ const admin = {
         AddUser(context,param){
             return new Promise((resolve,reject)=>{
                 addUser(param).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        DeleteUser(context,param){
+            return new Promise((resolve,reject)=>{
+                deleteUser(param.id).then(res=>resolve(res)).catch(err=>reject(err))
             })
         },
         GetCanteenInfo(){

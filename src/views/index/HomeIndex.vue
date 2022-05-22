@@ -210,6 +210,7 @@ import Rate from "@/components/rate";
 import WaitLine from "@/components/waitLine";
 import {ElMessageBox} from "element-plus";
 import AdminPage from "./AdminPage";
+import {httpOrHttps} from "@/utils/const/const";
 
 function compare(p) {
   return function(m, n){
@@ -265,6 +266,17 @@ export default {
           }
         ]
       },
+    }
+  },
+  created() {
+    /**
+     * Problems encountered when using ngrok, enter the domain name to automatically jump to the home page using https,
+     * there will be problems accessing resources
+     * @time 2022-03-02 21:08:57
+     */
+    let isHttps = 'https:' === document.location.protocol ? true: false;
+    if (isHttps){
+      window.location.replace(httpOrHttps+document.location.host);
     }
   },
   mounted() {

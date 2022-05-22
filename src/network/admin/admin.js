@@ -217,6 +217,18 @@ export function addUser(param){
     })
 }
 
+export function deleteUser(id){
+    return new Promise((resolve,reject)=>{
+        request({
+            url:'/admin/deleteUser',
+            method:'post',
+            params:{
+                id
+            }
+        }).then(data=>resolve(data)).catch(err=>reject(err))
+    })
+}
+
 export function getCanteenInfo(){
     return new Promise((resolve,reject)=>{
         request({
