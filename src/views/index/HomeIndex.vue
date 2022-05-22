@@ -1,11 +1,21 @@
 <template>
   <div class="header">
-    <div class="logo">
-      <img class="logo-image" alt="project logo" src="../../assets/logo.png">
-      <div class="title">
-        <div class="projName">GCUF</div>
-        <div class="slogan">Un passage fluide et sans surprise pour un repas serein</div>
+    <div class="main">
+      <div class="logo">
+        <img class="logo-image" alt="project logo" src="../../assets/logo.png">
+        <div class="title">
+          <div class="core-container">
+            <span class="co">Co</span>
+            <span class="re">Re</span>
+          </div>
+          <div class="cdr-container">
+            <span class="co">Compagnon</span>
+            <span class="de"> de </span>
+            <span class="re">Repas</span>
+          </div>
+        </div>
       </div>
+      <div class="slogan">Un passage fluide et sans surprise pour un repas serein</div>
     </div>
     <div class="header-right-container">
       <el-button class="header-button" @click="drawer = true" type="primary">About us</el-button>
@@ -18,9 +28,46 @@
       title="Gestion de la cantine"
       v-model="drawer"
       :direction="direction">
-    <span>L'équipe de MO50</span>
-    <div>Yonghui Yuan Chenfan Colin</div>
+    <div class="drawer">
+      <div class="equipe-title">L'équipe de MO50</div>
+      <img src="../../assets/equipe.jpeg" class="equipe-img">
+      <div class="equipe-info-title">MEMBER INFO</div>
+      <div class="equipe-info">
+        <el-descriptions
+            class="member"
+            :column="3"
+            :size="size"
+            border
+            v-for="index in memberInfo" :key="index"
+        >
+          <el-descriptions-item width="130px">
+            <template #label>
+              <div class="cell-item">
+                <el-icon :style="iconStyle">
+                  <user />
+                </el-icon>
+                Name
+              </div>
+            </template>
+            {{ index.name }}
+          </el-descriptions-item>
+          <el-descriptions-item width="100px">
+            <template #label>
+              <div class="cell-item">
+                <el-icon :style="iconStyle">
+                  <message />
+                </el-icon>
+                Email
+              </div>
+            </template>
+            {{ index.email }}
+          </el-descriptions-item>
+        </el-descriptions>
+      </div>
+    </div>
+
   </el-drawer>
+
   <el-dialog v-model="dialogFormVisible" title="Admin login" width="500px">
     <el-form :model="form" :rules="loginRules" ref="loginForm">
       <el-form-item prop="name" label="Username" :label-width="formLabelWidth">
@@ -49,7 +96,7 @@
       <div class="popular">
         <span class="demonstration">Les plats les plus populaires</span>
         <el-carousel height="230px" v-model="carousel">
-          <el-carousel-item v-for="item in tabList.slice(0, 4)" :key="item">
+          <el-carousel-item v-for="item in indexList.slice(0, 4)" :key="item">
             <img class="plats-popular" :src="item.imgurl" alt="popular">
           </el-carousel-item>
         </el-carousel>
@@ -58,24 +105,100 @@
     </div>
 
     <div class="scroll">
-      <div v-for="item in tabList" :key="item" >
-        <div class="container">
-          <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
-          <div class="plats-name">{{ item.name }}</div>
-          <spliter class="plats-spliter"></spliter>
-          <div class="text-container">
-            <span class="text-left">Il en reste encore :</span>
-            <span class="text-right">{{ item.amount }}</span>
+      <el-tabs v-model="indexTab" class="tabs" stretch>
+        <el-tab-pane label="Lundi" name="first" class="tabs-item">
+          <div v-for="item in aList" :key="item" >
+            <div class="container">
+              <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
+              <div class="plats-name">{{ item.name }}</div>
+              <spliter class="plats-spliter"></spliter>
+              <div class="text-container">
+                <span class="text-left">Il en reste encore :</span>
+                <span class="text-right">{{ item.amount }}</span>
+              </div>
+              <div class="note">Notez-nous!</div>
+              <div class="note-component">
+                <rate :home="item"></rate>
+                <span class="note-text">{{ 'Total: ' + item.rate }}</span>
+              </div>
+            </div>
           </div>
-          <div class="note">Notez-nous!</div>
-          <div class="note-component">
-            <rate :home="item"></rate>
-            <span class="note-text">{{ 'Total: ' + item.rate }}</span>
+        </el-tab-pane>
+        <el-tab-pane label="Mardi" name="second">
+          <div v-for="item in bList" :key="item" >
+            <div class="container">
+              <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
+              <div class="plats-name">{{ item.name }}</div>
+              <spliter class="plats-spliter"></spliter>
+              <div class="text-container">
+                <span class="text-left">Il en reste encore :</span>
+                <span class="text-right">{{ item.amount }}</span>
+              </div>
+              <div class="note">Notez-nous!</div>
+              <div class="note-component">
+                <rate :home="item"></rate>
+                <span class="note-text">{{ 'Total: ' + item.rate }}</span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </el-tab-pane>
+        <el-tab-pane label="Mercredi" name="third">
+          <div v-for="item in cList" :key="item" >
+            <div class="container">
+              <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
+              <div class="plats-name">{{ item.name }}</div>
+              <spliter class="plats-spliter"></spliter>
+              <div class="text-container">
+                <span class="text-left">Il en reste encore :</span>
+                <span class="text-right">{{ item.amount }}</span>
+              </div>
+              <div class="note">Notez-nous!</div>
+              <div class="note-component">
+                <rate :home="item"></rate>
+                <span class="note-text">{{ 'Total: ' + item.rate }}</span>
+              </div>
+            </div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="Jeudi" name="fourth">
+          <div v-for="item in dList" :key="item" >
+            <div class="container">
+              <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
+              <div class="plats-name">{{ item.name }}</div>
+              <spliter class="plats-spliter"></spliter>
+              <div class="text-container">
+                <span class="text-left">Il en reste encore :</span>
+                <span class="text-right">{{ item.amount }}</span>
+              </div>
+              <div class="note">Notez-nous!</div>
+              <div class="note-component">
+                <rate :home="item"></rate>
+                <span class="note-text">{{ 'Total: ' + item.rate }}</span>
+              </div>
+            </div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="Vendredi" name="fifth">
+          <div v-for="item in eList" :key="item" >
+            <div class="container">
+              <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
+              <div class="plats-name">{{ item.name }}</div>
+              <spliter class="plats-spliter"></spliter>
+              <div class="text-container">
+                <span class="text-left">Il en reste encore :</span>
+                <span class="text-right">{{ item.amount }}</span>
+              </div>
+              <div class="note">Notez-nous!</div>
+              <div class="note-component">
+                <rate :home="item"></rate>
+                <span class="note-text">{{ 'Total: ' + item.rate }}</span>
+              </div>
+            </div>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
     </div>
-    <div class="footer"></div>
+    <div class="footer">©2022 CoRe</div>
   </div>
   <el-backtop :right="40" :bottom="100"/>
 </template>
@@ -87,7 +210,6 @@ import Rate from "@/components/rate";
 import WaitLine from "@/components/waitLine";
 import {ElMessageBox} from "element-plus";
 import AdminPage from "./AdminPage";
-
 
 function compare(p) {
   return function(m, n){
@@ -103,8 +225,21 @@ export default {
   components: {Spliter, News, Rate, WaitLine, AdminPage},
   data() {
     return {
+      indexTab: "first",
       carousel: 0,
-      tabList: [],
+      tabList: [],  //all plats
+      indexList: [], //for popular plats
+      aList: [],
+      bList: [],
+      cList: [],
+      dList: [],
+      eList: [],
+      memberInfo: [
+        {name: 'Yonghui Huang', email: 'yong.huang@utbm.fr'},
+        {name: 'Yuan Cao', email: 'yuan.cao@utbm.fr'},
+        {name: 'Chenfan Xu', email: 'chenfan.xu@utbm.fr'},
+        {name: 'Colin Losser', email: 'colin.losser@utbm.fr'},
+      ],
       drawer: false,
       direction: 'rtl',
       //used for login, carry the username and password
@@ -134,6 +269,17 @@ export default {
   },
   mounted() {
     this.init();
+    this.getToday();
+    if(this.timer){
+      clearInterval(this.timer)
+    }else{
+      this.timer=setInterval(()=>{
+        this.loadData()
+      },2000)
+    }
+  },
+  unmounted(){
+    clearInterval(this.timer)
   },
   computed: {
     isFilled() {
@@ -146,6 +292,23 @@ export default {
     * @author yong.huang@utbm.fr yuan.cao@utbm.fr
     * @date 2022-05-12 17:53:58
     */
+    getToday() {
+      let wk = new Date().getDay();
+      let weeks = ['first', 'first', 'second', 'third', 'fourth', 'fifth', 'first'];
+      this.indexTab = weeks[wk];
+    },
+    loadData() {
+      let cur = JSON.parse(sessionStorage.getItem('curWebSocketData'));
+      if (cur != "connection succeeds"|| cur != null){
+        if(cur.msg == "plat") {
+          for(let i = 0; i < this.tabList.length-1;i++){
+            if(JSON.stringify(this.tabList[i].id) == cur.data.pid){
+              this.tabList[i].amount = cur.data.weightOrNumber;
+            }
+          }
+        }
+      }
+    },
     login(){
       this.$refs.loginForm.validate(valid=>{
         if(valid){
@@ -216,7 +379,18 @@ export default {
         if(res&&res.data){//to make sure the correct arrival of data
           if(res.code==='suc'){
             res.data.forEach((plat)=>{
-              this.tabList.push(plat)
+              this.tabList.push(plat);
+              if(plat.day == 0){
+                this.aList.push(plat);
+              }else if(plat.day == 1){
+                this.bList.push(plat);
+              }else if(plat.day == 2){
+                this.cList.push(plat);
+              }else if(plat.day == 3){
+                this.dList.push(plat);
+              }else if(plat.day == 4){
+                this.eList.push(plat);
+              }
             })
           }else{
             console.log('server response error');
@@ -225,7 +399,8 @@ export default {
       }).catch(err=>{
         console.log(err)
       }),
-      this.tabList.sort(compare("rate"));
+      this.indexList = this.tabList;
+      this.indexList.sort(compare("rate"));
     }
   },
 }
@@ -263,11 +438,32 @@ export default {
   margin-left: 10px;
 }
 
-.projName {
-  font-size: 30px;
+.core-container {
+  display: flex;
+  flex-direction: row;
+  font-size: 40px;
+  line-height: 35px;
+  padding-top: 5px;
+}
+
+.co {
+  color: #f0c78a;
+}
+
+.re {
+  color: #f9a7a7;
+}
+
+.de {
+  color: grey;
+}
+
+.cdr-container {
+  font-size: 1px;
 }
 
 .slogan {
+  padding-left: 8px;
   font-size: 8px;
   color: grey;
 }
@@ -284,6 +480,31 @@ export default {
   border-color: white;
   color: black;
   font-size: 18px;
+}
+
+.drawer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.equipe-title {
+  font-size: 28px;
+  padding-bottom: 30px;
+}
+
+.equipe-img {
+  height: 300px;
+  width: 500px;
+}
+
+.equipe-info-title {
+  font-size: 25px;
+  padding-top: 30px;
+}
+
+.equipe-info {
+  padding-top: 30px;
 }
 
 .divider {
@@ -376,6 +597,19 @@ export default {
   margin-right: 10px;
 }
 
+.tabs {
+  width: 100%;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.tabs-item {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  flex-wrap: wrap;
+}
+
 .scroll {
   display: flex;
   background-color: white;
@@ -440,6 +674,9 @@ export default {
 .footer {
   height: 200px;
   width: 100%;
-  background-color: black;
+  background-color: #d3dce6;
+  font-size: 15px;
+  text-align: center;
+  line-height: 200px;
 }
 </style>
