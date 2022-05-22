@@ -6,7 +6,8 @@
 */
 //internal const
 const httpOrHttps = 'http://'
-const serverUrl = 'server.cklovery.life'
+// const serverUrl = 'server.cklovery.life'//url for production
+const serverUrl = '127.0.0.1:8085'//url for development
 
 //general const
 const cantineID = '1'
