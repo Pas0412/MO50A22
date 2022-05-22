@@ -319,8 +319,15 @@ export default {
                 if(res){//make sure there is response anyway
                   if(res.code==='suc'){
                     //if login succeeds, save the token into Vuex
+                    const loginVuexObj={
+                      username:res.data.name,
+                      id:res.data.id,
+                      role:res.data.role,
+                      lastIp:res.data.lastIp,
+                      lastTime:res.data.lastTime,
+                    };
                     this.$store.commit('set_token',{token:res.token,userId:res.userId,name:res.data.name})
-                    this.$store.commit('set_userInfo',{role:res.data.role,username:res.data.name})
+                    this.$store.commit('set_userInfo',loginVuexObj)
                     //delete by ycao 20220514 create vue warn
                     // this.$router.push({
                     //   name: 'AdminPage',

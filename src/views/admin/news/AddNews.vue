@@ -21,13 +21,13 @@
 <script>
 import {cantineID} from "@/utils/const/const";
 import {ElMessageBox} from "element-plus";
-import formatDate from "@/utils/CommonUtils";
+import {formatDate} from "@/utils/CommonUtils";
 
 export default {
   name: "AddNews",
   data(){
     return {
-      dateValue:"",
+      dateValue:new Date(),
       editNewsForm:{}
     }
   },

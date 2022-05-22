@@ -4,32 +4,48 @@
             <el-col :span="8">
                 <el-card shadow="hover" class="mgb20" style="height:252px;">
                     <div class="user-info">
-                        <img src="../../assets/img/img.jpg" class="user-avator" alt />
+                        <img :src="getPhotoForHomeIndex" class="user-avator" alt />
                         <div class="user-info-cont">
                             <div class="user-info-name">{{ name }}</div>
-                            <div>{{ role }}</div>
+                            <div @click="changeDate">{{ role }}</div>
                         </div>
                     </div>
                     <div class="user-info-list">
-                        上次登录时间：
-                        <span>2019-11-01</span>
+                        Last login time: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>{{getLastLoginTime}}</span>
                     </div>
                     <div class="user-info-list">
-                        上次登录地点：
-                        <span>东莞</span>
+                        Last login IP address
+                        <span>{{getLastLoginIP}}</span>
                     </div>
                 </el-card>
                 <el-card shadow="hover" style="height:252px;">
                     <template #header>
                         <div class="clearfix">
-                            <span>语言详情</span>
+                            <span>Change Password</span>
                         </div>
                     </template>
-                    Vue
-                    <el-progress :percentage="71.3" color="#42b983"></el-progress>JavaScript
-                    <el-progress :percentage="24.1" color="#f1e05a"></el-progress>CSS
-                    <el-progress :percentage="13.7"></el-progress>HTML
-                    <el-progress :percentage="5.9" color="#f56c6c"></el-progress>
+                  <div class="update-pwd">
+                    <div class="old-pwd">
+                      <el-input
+                          v-model="myPwdObj.oldPassword"
+                          type="password"
+                          placeholder="Input the old password"
+                          show-password
+                      />
+                    </div>
+                    <div class="new-pwd">
+                      <el-input
+                          v-model="myPwdObj.newPassword"
+                          type="password"
+                          placeholder="Input the new password"
+                          show-password
+                      />
+                    </div>
+                    <div class="update-pwd-btn">
+                      <el-button color="rgb(24, 134, 250)" :disabled="!isFilled" @click="updatePwd">Update your password</el-button>
+                    </div>
+                  </div>
                 </el-card>
             </el-col>
             <el-col :span="16">
@@ -39,8 +55,8 @@
                             <div class="grid-content grid-con-1">
                                 <i class="el-icon-user-solid grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">1234</div>
-                                    <div>用户访问量</div>
+                                    <div class="grid-num">{{waitNb}}</div>
+                                    <div>Current number of people in the queue</div>
                                 </div>
                             </div>
                         </el-card>
@@ -50,68 +66,45 @@
                             <div class="grid-content grid-con-2">
                                 <i class="el-icon-message-solid grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">321</div>
-                                    <div>系统消息</div>
+                                    <div class="grid-num">{{waitTime}} min</div>
+                                    <div>Current estimated wait time</div>
                                 </div>
                             </div>
                         </el-card>
                     </el-col>
                     <el-col :span="8">
-                        <el-card shadow="hover" :body-style="{ padding: '0px' }">
+                        <el-card shadow="always" :body-style="{ padding: '0px' }">
                             <div class="grid-content grid-con-3">
-                                <i class="el-icon-s-goods grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">5000</div>
-                                    <div>数量</div>
+                                  <div class="grid-num">{{canteenInfo.name}}</div>
+                                    <div>{{canteenInfo.location}}</div>
                                 </div>
                             </div>
                         </el-card>
                     </el-col>
                 </el-row>
-                <el-card shadow="hover" style="height:403px;">
-                    <template #header>
-                        <div class="clearfix">
-                            <span>待办事项</span>
-                            <el-button style="float: right; padding: 3px 0" type="text">添加</el-button>
+                <el-row :gutter="20" class="mgb20">
+                  <el-col :span="12">
+                    <el-card shadow="hover" style="height: 404px;">
+                      <schart ref="line" class="schart" canvasId="line" :options="options"></schart>
+                    </el-card>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-card shadow="hover" style="height: 404px">
+                      <template #header>
+                        <div class="card-header">
+                          <span style="font-weight: bolder">The least amount of dishes</span>
+                          <el-button class="button" @click="$router.push('/AdminPage/platGeneralInfo');" text>Go to detail</el-button>
+                          <span class="refresh-icon"><el-icon @click="getLeastPlatsFromServer"><Refresh /></el-icon></span>
                         </div>
-                    </template>
-
-                    <el-table :show-header="false" :data="todoList" style="width:100%;">
-                        <el-table-column width="40">
-                            <template #default="scope">
-                                <el-checkbox v-model="scope.row.status"></el-checkbox>
-                            </template>
-                        </el-table-column>
-                        <el-table-column>
-                            <template #default="scope">
-                                <div
-                                    class="todo-item"
-                                    :class="{
-                                        'todo-item-del': scope.row.status,
-                                    }"
-                                >{{ scope.row.title }}</div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column width="60">
-                            <template>
-                                <i class="el-icon-edit"></i>
-                                <i class="el-icon-delete"></i>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-card>
-            </el-col>
-        </el-row>
-        <el-row :gutter="20">
-            <el-col :span="12">
-                <el-card shadow="hover">
-                    <schart ref="bar" class="schart" canvasId="bar" :options="options"></schart>
-                </el-card>
-            </el-col>
-            <el-col :span="12">
-                <el-card shadow="hover">
-                    <schart ref="line" class="schart" canvasId="line" :options="options2"></schart>
-                </el-card>
+                      </template>
+                      <el-table :data="tabList">
+                        <el-table-column prop="name" label="Name" width="215" />
+                        <el-table-column prop="amount" label="The remaining amount" />
+                      </el-table>
+                    </el-card>
+                  </el-col>
+              </el-row>
             </el-col>
         </el-row>
     </div>
@@ -119,110 +112,57 @@
 
 <script>
 import Schart from "vue-schart";
+import {adminRoleId, cantineID, intervalUpdateDataAdminIndexDev, maxNumForChart} from "@/utils/const/const";
+import {ElMessageBox} from "element-plus";
+import {random} from "@/utils/CommonUtils";
 export default {
     name: "AdminDashboard",
-    data() {
+  mounted() {
+      this.init()
+  },
+  unmounted(){
+    clearInterval(this.timerChart)
+  },
+  data() {
         return {
-            name: localStorage.getItem("ms_username"),
-            todoList: [
-                {
-                    title: "今天要修复100个bug",
-                    status: false
-                },
-                {
-                    title: "今天要修复100个bug",
-                    status: false
-                },
-                {
-                    title: "今天要写100行代码加几个bug吧",
-                    status: false
-                },
-                {
-                    title: "今天要修复100个bug",
-                    status: false
-                },
-                {
-                    title: "今天要修复100个bug",
-                    status: true
-                },
-                {
-                    title: "今天要写100行代码加几个bug吧",
-                    status: true
-                }
-            ],
-            data: [
-                {
-                    name: "2018/09/04",
-                    value: 1083
-                },
-                {
-                    name: "2018/09/05",
-                    value: 941
-                },
-                {
-                    name: "2018/09/06",
-                    value: 1139
-                },
-                {
-                    name: "2018/09/07",
-                    value: 816
-                },
-                {
-                    name: "2018/09/08",
-                    value: 327
-                },
-                {
-                    name: "2018/09/09",
-                    value: 228
-                },
-                {
-                    name: "2018/09/10",
-                    value: 1065
-                }
-            ],
-            options: {
-                type: "bar",
-                title: {
-                    text: "最近一周各品类销售图"
-                },
-                xRorate: 25,
-                labels: ["周一", "周二", "周三", "周四", "周五"],
-                datasets: [
-                    {
-                        label: "家电",
-                        data: [234, 278, 270, 190, 230]
-                    },
-                    {
-                        label: "百货",
-                        data: [164, 178, 190, 135, 160]
-                    },
-                    {
-                        label: "食品",
-                        data: [144, 198, 150, 235, 120]
-                    }
-                ]
+          historyTimeArr:[],
+          historyInArr:[],
+          historyOutArr:[],
+          curIndex:0,
+          takeConst:1,//if {curIndex} pass this value, should reform the chart
+          waitNb:0,
+          waitTime:0,
+          timerChart:null,
+          name: this.$store.getters.username,
+          tabList: [],
+          myPwdObj:{
+            id:this.$store.getters.userId,
+            name:this.$store.getters.name,
+            oldPassword:'',
+            newPassword:''
+          },
+          canteenInfo:{
+            id:cantineID,
+            name:'',
+            location:'',
+          },
+          options: {
+            type: "line",
+            title: {
+              text: "Canteen Queue Flow Chart"
             },
-            options2: {
-                type: "line",
-                title: {
-                    text: "最近几个月各品类销售趋势图"
-                },
-                labels: ["6月", "7月", "8月", "9月", "10月"],
-                datasets: [
-                    {
-                        label: "家电",
-                        data: [234, 278, 270, 190, 230]
-                    },
-                    {
-                        label: "百货",
-                        data: [164, 178, 150, 135, 160]
-                    },
-                    {
-                        label: "食品",
-                        data: [74, 118, 200, 235, 90]
-                    }
-                ]
-            }
+            labels: [],
+            datasets: [
+              {
+                label: "IN",
+                data: []
+              },
+              {
+                label: "OUT",
+                data: []
+              }
+            ]
+          }
         };
     },
     components: {
@@ -230,27 +170,281 @@ export default {
     },
     computed: {
         role() {
-            return this.name === "admin" ? "超级管理员" : "普通用户";
-        }
+            return this.getRole() === 0 ? "Director" : "Staff";
+        },
+        getPhotoForHomeIndex(){
+          return this.getRole()===adminRoleId
+              ?require("@/assets/img/director.png")
+              :require("@/assets/img/staff.png")
+        },
+      getLastLoginIP(){
+          return this.$store.getters.lastIp===null
+              ?''
+              :this.$store.getters.lastIp
+      },
+      getLastLoginTime(){
+        return this.$store.getters.lastTime===null
+            ?''
+            :this.$store.getters.lastTime
+      },
+      isFilled() {
+        return this.myPwdObj.oldPassword && this.myPwdObj.newPassword;
+      },
     },
 
     methods: {
-        changeDate() {
-            const now = new Date().getTime();
-            this.data.forEach((item, index) => {
-                const date = new Date(now - (6 - index) * 86400000);
-                item.name = `${date.getFullYear()}/${date.getMonth() +
-                    1}/${date.getDate()}`;
-            });
+      init(){
+        this.getLeastPlatsFromServer()
+        this.getCanteenInfoFromServer()
+        this.openTimerForUpdateChart()
+        this.getHistoryDataForChart()
+      },
+      /**
+      * @description: curIndex continue to grow, which means for example 98 = 10*9+8 ,
+       * 8 is the maximum of the curIndex, when it comes to it, the interval should be changed,
+       * so comes into doGiveDataForChart()
+      * @author yuan.cao@utbm.fr
+      * @date 2022-05-21 22:38:49
+      */
+      updateChartFromSessionSto(){
+        let cur = JSON.parse(sessionStorage.getItem('curWebSocketData'))
+        if (cur&&cur != "connection succeeds"&&cur.msg==='people'){
+          this.curIndex+=1;
+          this.historyTimeArr.push(this.getFormatTime())
+          this.historyInArr.push(cur.data.totalIn)
+          this.historyOutArr.push(cur.data.totalOut)
+          //when server first starts, the length of array is so small that grows like 0,1,2,
+          //the data in it should also be shown on the chart
+          if(this.historyInArr.length<=maxNumForChart||this.curIndex>=this.takeConst){
+            this.doGiveDataForChart()
+          }
+          this.waitNb = cur.data.numberOfPeople;
+          this.waitTime = Math.round(cur.data.waitTime/60);
         }
-    }
+      },
+      /**
+      * @description: to avoid each time open browser the chart starts from 0, we get the history data from server,
+       * the maximum data of chart is {maxNumForChart} so delete one if pass the limit
+      * @author yuan.cao@utbm.fr
+      * @date 2022-05-21 20:10:31
+      */
+      getHistoryDataForChart(){
+        this.$store.dispatch('GetNumHistory').then(res => {
+          if (res && res.data) {//to make sure the correct arrival of data
+            if (res.code === 'suc') {
+              if(res.data[0]&&res.data[1]){//when server starts first time, there is no data
+                res.data[0].forEach(e=>{
+                  let time = Object.keys(e)[0];
+                  let inNum = Object.values(e)[0];
+                  this.historyTimeArr.push(time)
+                  this.historyInArr.push(inNum)
+                });
+                res.data[1]&&res.data[1].forEach(e=>{
+                  let outNum = Object.values(e)[0];
+                  this.historyOutArr.push(outNum)
+                });
+                this.doGiveDataForChart()
+              }
+            } else {
+              console.log('server response error');
+            }
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      },
+      /**
+      * @description: give the data to the chart, make sure the interval between x is acceptable = {takeConst}
+      * @author yuan.cao@utbm.fr
+      * @date 2022-05-21 20:48:39
+      */
+      doGiveDataForChart(){
+        const tmpTimeArr=this.historyTimeArr;
+        const tmpInArr=this.historyInArr;
+        const tmpOutArr=this.historyOutArr;
+        if(tmpTimeArr.length!==tmpInArr.length||tmpTimeArr.length===0) {
+          console.log("never return after initialisation");
+          return;
+        }
+
+        /**
+         * for example
+         * array[98] 98/8=12...2       0 12 24 36 48 60 72 84 96(no) => 9-1 values
+         * @type {number}
+         */
+        const curInterval = Math.floor(tmpInArr.length/maxNumForChart)
+        this.takeConst =  curInterval===0
+            ?1
+            :curInterval;//include 0
+        this.curIndex = tmpInArr.length%maxNumForChart;
+
+        let newIndex = 0;
+        const newTimeArr = [];
+        const newInArr = [];
+        const newOutArr = [];
+        if(this.takeConst===0) return;//avoid infinite loop
+        /**
+         * loop array[98]: until 96
+         */
+        const upper = maxNumForChart*this.takeConst<tmpTimeArr.length
+            ?maxNumForChart*this.takeConst:tmpTimeArr.length;//server start
+        while(newIndex<upper){
+          newTimeArr.push(tmpTimeArr[newIndex])
+          newInArr.push(tmpInArr[newIndex])
+          newOutArr.push(tmpOutArr[newIndex])
+          newIndex+=this.takeConst;
+        }
+        this.options.labels=newTimeArr;
+        this.options.datasets[0].data=newInArr;
+        this.options.datasets[1].data=newOutArr;
+      },
+      openTimerForUpdateChart(){
+        if(this.timerChart){
+          clearInterval(this.timerChart)
+        }else{
+          this.timerChart=setInterval(()=>{
+            this.updateChartFromSessionSto();
+          },intervalUpdateDataAdminIndexDev)
+        }
+      },
+      getLeastPlatsFromServer(){
+        this.$store.dispatch('GetLeastPlats').then(res=>{
+          // console.log(res);
+          if(res&&res.data){//to make sure the correct arrival of data
+            if(res.code==='suc'){
+              this.tabList=[];
+              res.data.forEach((plat)=>{
+                this.tabList.push(plat)
+              })
+            }else{
+              console.log('server response error');
+            }
+          }
+        }).catch(err=>{
+          console.log(err)
+        })
+      },
+      getCanteenInfoFromServer() {
+        this.$store.dispatch('GetCanteenInfo').then(res=>{
+          if(res&&res.data){//to make sure the correct arrival of data
+            if(res.code==='suc'){
+              this.canteenInfo = res.data
+            }else{
+              console.log('server response error');
+            }
+          }
+        }).catch(err=>{
+          console.log(err)
+        })
+      },
+      getRole(){
+        const type = typeof (this.$store.getters.role)
+        if(type==="number"){
+          return this.$store.getters.role
+        }else{
+          //parse proxy
+          const roleObj = JSON.parse(JSON.stringify(this.$store.getters.role))
+          return roleObj.role
+        }
+      },
+      changeDate() {
+        const now = new Date().getTime();
+        this.data.forEach((item, index) => {
+          const date = new Date(now - (6 - index) * 86400000);
+          item.name = `${date.getFullYear()}/${date.getMonth() +
+          1}/${date.getDate()}`;
+        });
+      },
+      updatePwd(){
+        this.$store.dispatch('UpdatePwd', this.myPwdObj).then(res => {
+          if(res){
+            if (res.code === 'suc') {
+              ElMessageBox.alert("Updating the password succeeds",{
+                confirmButtonText:'OK',
+                callback:()=>{
+                }
+              })
+            } else {
+              ElMessageBox.alert("Updating the password fails: "+res.msg,{
+                confirmButtonText:'OK',
+                callback:()=>{
+                }
+              })
+            }
+          }else{
+            console.log('server response error');
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      },
+      /**
+      * @description: used for update in real time  the number of people in the chart
+      * @author yuan.cao@utbm.fr
+      * @date 2022-05-20 22:51:20
+      */
+      // updateNumUp() {
+      //   let cur = JSON.parse(sessionStorage.getItem('curWebSocketData'));
+      //   if (cur&&cur != "connection succeeds"&&cur.msg==='people'){
+      //     this.waitNb = cur.data.numberOfPeople;
+      //     this.waitTime = Math.round(cur.data.waitTime/60);
+      //   }
+      // },
+      /**
+      * @description: get current time : HH:mm
+      * @author yuan.cao@utbm.fr
+      * @date 2022-05-20 23:35:20
+      */
+      getFormatTime(){
+        const myDate = new Date();
+        const h = myDate.getHours();  //hour (0-23)
+        const m = myDate.getMinutes();  //minute (0-59)
+        return h+':'+m;
+      },
+      /**
+      * @description: listener the length of the data array of the chart: it should not pass {maxNum} parameters
+       * should be used before each time push the data into array
+      * @author yuan.cao@utbm.fr
+      * @date 2022-05-21 01:23:23
+      */
+      checkLengthChartDataArr(){
+        if(this.options.labels.length>maxNumForChart
+            ||this.options.datasets[0].data>maxNumForChart
+            ||this.options.datasets[1].data>maxNumForChart) {
+          const outNum = random(1,maxNumForChart);
+          this.options.labels.splice(outNum, 1)
+          this.options.datasets[0].data.splice(outNum, 1)
+          this.options.datasets[1].data.splice(outNum, 1)
+        }
+
+      }
+    },
 };
 </script>
 
 <style scoped>
 #admin-main-page{
-  height: calc(100% - 37px);
-  overflow: scroll;
+  margin-top: 15px;
+  height: calc(100% - 52px);
+  width: 95%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.item {
+  margin-bottom: 18px;
+}
+.old-pwd,.new-pwd,.update-pwd-btn{
+  margin: 15px 0;
 }
 .el-row {
     margin-bottom: 20px;
@@ -304,6 +498,7 @@ export default {
 }
 
 .grid-con-3 .grid-num {
+    margin: 0 15px;
     color: rgb(242, 94, 67);
 }
 
@@ -359,5 +554,8 @@ export default {
 .schart {
     width: 100%;
     height: 300px;
+}
+.refresh-icon{
+  cursor: pointer;
 }
 </style>

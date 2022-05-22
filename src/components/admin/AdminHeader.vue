@@ -7,22 +7,9 @@
         <div class="logo">Canteen Management</div>
         <div class="header-right">
             <div class="header-user-con">
-                <!-- 消息中心 -->
-                <div class="btn-bell">
-                    <el-tooltip
-                        effect="dark"
-                        :content="message?`有${message}条未读消息`:`消息中心`"
-                        placement="bottom"
-                    >
-                        <router-link to="/tabs">
-                          <img style="position: relative;top: 5px" src="~assets/img/Bell_ringing.png">
-                        </router-link>
-                    </el-tooltip>
-                    <span class="btn-bell-badge" v-if="message"></span>
-                </div>
                 <!-- 用户头像 -->
                 <div class="user-avator">
-                    <img src="../../assets/img/img.jpg" />
+                    <img src="../../assets/img/cantine.png" />
                 </div>
                 <!-- 用户名下拉菜单 -->
                 <el-dropdown class="user-name" trigger="click" @command="handleCommand">
@@ -32,19 +19,21 @@
                     </span>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <a href="https://github.com/lin-xin/vue-manage-system" target="_blank">
-                                <el-dropdown-item>项目仓库</el-dropdown-item>
+                            <a :href="uniWebUri" target="_blank">
+                                <el-dropdown-item>University Website</el-dropdown-item>
                             </a>
-                            <el-dropdown-item divided command="logout">Déconnexion</el-dropdown-item>
+                            <el-dropdown-item divided command="logout">Logout</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
+                  <el-icon :size="15" color="white"><ArrowDown /></el-icon>
                 </el-dropdown>&nbsp;
-              <el-icon :size="15"><ArrowDown /></el-icon>
             </div>
         </div>
     </div>
 </template>
 <script>
+import {universityWebsite} from "@/utils/const/const";
+
 export default {
   name:'AdminHeader',
     data() {
@@ -53,6 +42,7 @@ export default {
           name: "admin",
           message: 2,
           collapse:false,
+          uniWebUri:universityWebsite
         };
     },
     computed: {
@@ -123,7 +113,6 @@ export default {
     margin-right: 5px;
     font-size: 24px;
 }
-.btn-bell,
 .btn-fullscreen {
     position: relative;
     width: 30px;
@@ -153,9 +142,8 @@ export default {
 }
 .user-avator img {
     display: block;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 32px;
+    height: 32px;
 }
 .el-dropdown-link {
     color: #fff;

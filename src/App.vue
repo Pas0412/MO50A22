@@ -2,7 +2,7 @@
   <div id="app">
     <!--  cache component instances  -->
     <router-view v-slot="{ Component }">
-      <keep-alive :include="[]">
+      <keep-alive :include="['HomeIndex']">
         <component :is="Component" />
       </keep-alive>
     </router-view>

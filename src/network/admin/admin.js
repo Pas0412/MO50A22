@@ -107,6 +107,17 @@ export function addPlat(param){
         }).then(data=>resolve(data)).catch(err=>reject(err))
     })
 }
+export function getLeastPlats(){
+    return new Promise((resolve,reject)=>{
+        request({
+            url:'/admin/leastNumPlatsNow',
+            method:'get',
+            params:{
+                cid: cantineID
+            }
+        }).then(data=>resolve(data)).catch(err=>reject(err))
+    })
+}
 /*news domain start*/
 /**
 * @description: delete all selected news
@@ -201,6 +212,35 @@ export function addUser(param){
                 password:param.password,
                 role:param.role,
                 cid:cantineID
+            }
+        }).then(data=>resolve(data)).catch(err=>reject(err))
+    })
+}
+
+export function getCanteenInfo(){
+    return new Promise((resolve,reject)=>{
+        request({
+            url:'/admin/getCanteenInfo',
+            method:'get',
+            params:{
+                id: cantineID
+            }
+        }).then(data=>resolve(data)).catch(err=>reject(err))
+    })
+}
+
+/**
+* @description: get the history of the number in the canteen, to initialize the chart
+* @author yuan.cao@utbm.fr
+* @date 2022-05-21 00:35:40
+*/
+export function getNumHistory(){
+    return new Promise((resolve,reject)=>{
+        request({
+            url:'/admin/getNumHistory',
+            method:'get',
+            params:{
+                cid: cantineID
             }
         }).then(data=>resolve(data)).catch(err=>reject(err))
     })

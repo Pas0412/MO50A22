@@ -62,7 +62,7 @@ const routes = [
             {
                 path:"platSimpleChange",
                 meta: {
-                    title: 'Plat Change'
+                    title: 'Plat Edit'
                 },
                 component: PlatSimpleChange
             },
@@ -76,7 +76,7 @@ const routes = [
             {
                 path:"platDeleteHistory",
                 meta: {
-                    title: 'Plat Delete'
+                    title: 'Plat Activate'
                 },
                 component: PlatDeleteHistory
             },
@@ -128,7 +128,7 @@ router.beforeEach((to, from, next) => {
     if(to.path==='/'||to.path==='/HomeIndex'){
         document.title = 'Cantine Universitée';
     }else{
-        document.title = `${to.meta.title} | GCUF`;
+        document.title = `${to.meta.title} | CoRe`;
     }
     //it is a proxy now
     let role = store.getters.role

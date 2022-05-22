@@ -17,7 +17,7 @@
         </template>
         <template #default="scope">
           <el-button size="small" @click="handleRestore(scope.$index, scope.row)"
-          >Restore</el-button
+          >Reactivate</el-button
           >
           <el-button
               size="small"
@@ -57,7 +57,6 @@ export default {
     getAllDeletedPlatsFromServer() {
       this.tabList = [];
       this.$store.dispatch('GetAllDeletedPlats').then(res => {
-        console.log(res);
         if (res && res.data) {//to make sure the correct arrival of data
           if (res.code === 'suc') {
             res.data.forEach((plat) => {
@@ -74,7 +73,7 @@ export default {
     handleRestore(index,obj){
       this.$store.dispatch('RestorePlat', {id:obj.id}).then(res => {
         if (res&&res.code === 'suc') {
-          ElMessageBox.alert("Restoring one plat succeeds, you can now consult it in GENERAL INFO!",{
+          ElMessageBox.alert("Reactivating one plat succeeds, you can now consult it in GENERAL INFO!",{
             confirmButtonText:'OK',
             callback:()=>{
               this.getAllDeletedPlatsFromServer();

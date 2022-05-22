@@ -2,7 +2,7 @@ import {
     addNews,
     addPlat, addUser, deleteNews,
     deletePlat,
-    getAllDeletedPlats, getAllUsers,
+    getAllDeletedPlats, getAllUsers, getCanteenInfo, getLeastPlats, getNumHistory,
     realDeletePlat,
     restorePlat, updateNews,
     updatePlat, updatePwd, updateUser,
@@ -19,6 +19,8 @@ const admin = {
         :{
         username:'',
         role:'',//the current authorization
+        lastIp:'',
+        lastTime:'',
         collapseForAdmin:false,
         tagsList:[]
     },
@@ -26,17 +28,23 @@ const admin = {
         collapseForAdmin:state=>state.collapseForAdmin,
         role:state=>state.role,
         username:state=>state.username,
-        tagsList:state=>state.tagsList
+        tagsList:state=>state.tagsList,
+        lastIp:state=>state.lastIp,
+        lastTime:state=>state.lastTime
     },
     mutations:{
         set_userInfo(state,infoObj){
             state.username=infoObj.username;
             state.role=infoObj.role;
+            state.lastIp=infoObj.lastIp;
+            state.lastTime=infoObj.lastTime;
         },
         del_userInfo(state){
             state.role='';
             state.username='';
-            state.tagsList=[]
+            state.tagsList=[];
+            state.lastIp='';
+            state.lastTime='';
         },
         // sidebar collapse
         handleCollapse(state, data) {
@@ -125,6 +133,11 @@ const admin = {
                 addPlat(param).then(res=>resolve(res)).catch(err=>reject(err))
             })
         },
+        GetLeastPlats(){
+            return new Promise((resolve,reject)=>{
+                getLeastPlats().then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
         /*news domain start*/
         DeleteNews(context,param){
             return new Promise((resolve,reject)=>{
@@ -160,6 +173,16 @@ const admin = {
         AddUser(context,param){
             return new Promise((resolve,reject)=>{
                 addUser(param).then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        GetCanteenInfo(){
+            return new Promise((resolve,reject)=>{
+                getCanteenInfo().then(res=>resolve(res)).catch(err=>reject(err))
+            })
+        },
+        GetNumHistory(){
+            return new Promise((resolve,reject)=>{
+                getNumHistory().then(res=>resolve(res)).catch(err=>reject(err))
             })
         },
     }

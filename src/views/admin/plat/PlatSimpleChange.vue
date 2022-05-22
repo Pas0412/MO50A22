@@ -23,7 +23,7 @@
             size="small"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)"
-        >Delete</el-button
+        >Deactivate</el-button
         >
       </template>
     </el-table-column>
@@ -109,7 +109,7 @@ export default {
       this.dialogVisible = flag
     },
     handleDelete(index,obj){
-      ElMessageBox.confirm("Are you sure to delete the plat ["+obj.name+"] ?",{
+      ElMessageBox.confirm("Are you sure to deactivate the plat ["+obj.name+"] ?",{
         confirmButtonText:'Yes',
         cancelButtonText: 'Cancel',
         type: 'warning',
@@ -121,7 +121,7 @@ export default {
     deletePlat(id){
       this.$store.dispatch('DeletePlat', {id:id}).then(res => {
         if (res&&res.code === 'suc') {
-          ElMessageBox.alert("Deleting one plat succeeds, you can still recover it in DELETE HISTORY",{
+          ElMessageBox.alert("Deactivating one plat succeeds, you can still reactivate it in INACTIVATE LIST",{
             confirmButtonText:'OK',
             callback:()=>{
               this.getAllPlatsFromServer();
