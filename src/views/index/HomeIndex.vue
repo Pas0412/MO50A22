@@ -282,6 +282,7 @@ export default {
   mounted() {
     this.init();
     this.getToday();
+    this.doCacheForAboutUs();
     if(this.timer){
       clearInterval(this.timer)
     }else{
@@ -299,6 +300,18 @@ export default {
     }
   },
   methods:{
+    /**
+    * @description: preload the photo for about us, serve as a cache
+    * @author yuan.cao@utbm.fr
+    * @date 2022-05-22 22:45:53
+    */
+    doCacheForAboutUs(){
+      let bgImg = new Image()
+      bgImg.onerror = ()=>{
+        console.log('preloading photo of Aboutus error')
+      }
+      bgImg.src = require('../../assets/equipe.jpeg')
+    },
     /**
     * @description: login handler
     * @author yong.huang@utbm.fr yuan.cao@utbm.fr
