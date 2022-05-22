@@ -299,7 +299,9 @@ export default {
     },
     loadData() {
       let cur = JSON.parse(sessionStorage.getItem('curWebSocketData'));
-      if (cur != "connection succeeds"|| cur != null){
+      this.indexList = this.tabList;
+      this.indexList.sort(compare('rate'));
+      if (cur&&cur != "connection succeeds"){
         if(cur.msg == "plat") {
           for(let i = 0; i < this.tabList.length-1;i++){
             if(JSON.stringify(this.tabList[i].id) == cur.data.pid){
@@ -398,10 +400,8 @@ export default {
         }
       }).catch(err=>{
         console.log(err)
-      }),
-      this.indexList = this.tabList;
-      this.indexList.sort(compare("rate"));
-    }
+      })
+    },
   },
 }
 </script>

@@ -39,7 +39,7 @@ name: "waitLine",
   methods: {
     loadData() {
       let cur = JSON.parse(sessionStorage.getItem('curWebSocketData'));
-      if (cur != "connection succeeds"|| cur != null){
+      if (cur&&cur != "connection succeeds"){
         if(cur.msg == "people") {
           // console.log(cur)
           this.waitNb = cur.data.numberOfPeople;
