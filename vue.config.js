@@ -26,6 +26,11 @@ module.exports = defineConfig({
           type: "javascript/auto"
         },
       ]
-    }
+    },
+    devServer: {
+      proxy: 'http://'+'server.cklovery.life',//resolve the cross-domain problem
+      historyApiFallback: true,
+      allowedHosts: "all",
+    },
   },
 })

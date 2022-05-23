@@ -210,6 +210,7 @@ import Rate from "@/components/rate";
 import WaitLine from "@/components/waitLine";
 import {ElMessageBox} from "element-plus";
 import AdminPage from "./AdminPage";
+import {httpOrHttps} from "@/utils/const/const";
 
 function compare(p) {
   return function(m, n){
@@ -267,9 +268,21 @@ export default {
       },
     }
   },
+  created() {
+    /**
+     * Problems encountered when using ngrok, enter the domain name to automatically jump to the home page using https,
+     * there will be problems accessing resources
+     * @time 2022-03-02 21:08:57
+     */
+    let isHttps = 'https:' === document.location.protocol ? true: false;
+    if (isHttps){
+      window.location.replace(httpOrHttps+document.location.host);
+    }
+  },
   mounted() {
     this.init();
     this.getToday();
+    this.doCacheForAboutUs();
     if(this.timer){
       clearInterval(this.timer)
     }else{
@@ -287,6 +300,18 @@ export default {
     }
   },
   methods:{
+    /**
+    * @description: preload the photo for about us, serve as a cache
+    * @author yuan.cao@utbm.fr
+    * @date 2022-05-22 22:45:53
+    */
+    doCacheForAboutUs(){
+      let bgImg = new Image()
+      bgImg.onerror = ()=>{
+        console.log('preloading photo of Aboutus error')
+      }
+      bgImg.src = require('../../assets/equipe.jpeg')
+    },
     /**
     * @description: login handler
     * @author yong.huang@utbm.fr yuan.cao@utbm.fr

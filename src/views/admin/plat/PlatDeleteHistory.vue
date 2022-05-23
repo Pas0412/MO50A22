@@ -91,10 +91,12 @@ export default {
         confirmButtonText:'Yes',
         cancelButtonText: 'Cancel',
         type: 'warning',
-        callback:()=>{
-          this.realDeletePlat(obj.id)
-        }
+      })          .then(() => {
+        // here you can call the delete function.
+        // this is the part that is executed when you click yes
+        this.realDeletePlat(obj.id)
       })
+          .catch(() => {})
     },
     realDeletePlat(id){
       this.$store.dispatch('RealDeletePlat', {id:id}).then(res => {

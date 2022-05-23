@@ -101,10 +101,12 @@ export default {
           confirmButtonText:'Yes',
           cancelButtonText: 'Cancel',
           type: 'warning',
-          callback:()=>{
-            this.deleteNews(idArr)
-          }
+        })          .then(() => {
+          // here you can call the delete function.
+          // this is the part that is executed when you click yes
+          this.deleteNews(idArr)
         })
+            .catch(() => {})
 
       }else{
         return;

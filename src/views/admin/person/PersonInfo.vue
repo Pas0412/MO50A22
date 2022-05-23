@@ -126,13 +126,25 @@ export default {
       this.curSelectedObj = obj
       this.dialogVisible=true;
     },
+    handleDelete(index,obj){
+      ElMessageBox.confirm("Are you sure to delete the person ["+obj.name+"] ?",{
+        confirmButtonText:'Yes',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      })          .then(() => {
+        // here you can call the delete function.
+        // this is the part that is executed when you click yes
+        this.deleteUsers(obj.id);
+      })
+          .catch(() => {})
+    },
     handlerEmit(flag){
       this.dialogVisible = flag
     },
     deleteUsers(id){
       this.$store.dispatch('DeleteUser', {id:id}).then(res => {
         if (res&&res.code === 'suc') {
-          ElMessageBox.alert("Deleting the news succeeds",{
+          ElMessageBox.alert("Deleting the people succeeds",{
             confirmButtonText:'OK',
             callback:()=>{
               this.getUsersFromServer();
