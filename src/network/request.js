@@ -113,7 +113,13 @@ function interceptorHandler(error){
             default:
                 alertMes = "Unknown error";
                 console.log(error);
-                break;
+                ElMessageBox.alert("Please refreshed", "Attention!", {
+                    confirmButtonText: 'OK',
+                    callback: () => {
+                        window.location.reload();
+                    }
+                }).catch(r => console.log(r))
+                return;
         }
         ElMessageBox.alert(alertMes + ", please re-login", "Attention!", {
             confirmButtonText: 'OK',
