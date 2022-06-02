@@ -113,20 +113,18 @@ function interceptorHandler(error){
             default:
                 alertMes = "Unknown error";
                 console.log(error);
-                ElMessageBox.alert("Please refreshed", "Attention!", {
-                    confirmButtonText: 'OK',
-                    callback: () => {
-                        window.location.reload();
-                    }
-                }).catch(r => console.log(r))
-                return;
+                break;
         }
-        ElMessageBox.alert(alertMes + ", please re-login", "Attention!", {
-            confirmButtonText: 'OK',
-            callback: () => {
-                window.location.replace("/")
-            }
-        }).catch(r => console.log(r))
+        if(error.code==="ERR_NETWORK"){//cross-domain error, happen one in ten, especially first open browser, not-resolved bug
+            window.location.reload();
+        }else {
+            ElMessageBox.alert(alertMes + ", please re-login", "Attention!", {
+                confirmButtonText: 'OK',
+                callback: () => {
+                    window.location.replace("/")
+                }
+            }).catch(r => console.log(r))
+        }
     }else{
         ElMessageBox.alert("Please refreshed", "Attention!", {
             confirmButtonText: 'OK',
