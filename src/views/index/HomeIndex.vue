@@ -29,7 +29,7 @@
       v-model="drawer"
       :direction="direction">
     <div class="drawer">
-      <div class="equipe-title">L'équipe de MO50</div>
+      <div class="equipe-title">Team of MO50</div>
       <img src="../../assets/equipe.jpeg" class="equipe-img">
       <div class="equipe-info-title">MEMBER INFO</div>
       <div class="equipe-info">
@@ -94,7 +94,7 @@
       <news></news>
       <div class="divide-block"></div>
       <div class="popular">
-        <span class="demonstration">Les plats les plus populaires</span>
+        <span class="demonstration">The most popular</span>
         <el-carousel height="230px" v-model="carousel">
           <el-carousel-item v-for="item in indexList.slice(0, 4)" :key="item">
             <img class="plats-popular" :src="item.imgurl" alt="popular">
@@ -106,17 +106,17 @@
 
     <div class="scroll">
       <el-tabs v-model="indexTab" class="tabs" stretch>
-        <el-tab-pane label="Lundi" name="first" class="tabs-item">
+        <el-tab-pane label="Monday" name="first" class="tabs-item">
           <div v-for="item in aList" :key="item" >
             <div class="container">
               <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
               <div class="plats-name">{{ item.name }}</div>
               <spliter class="plats-spliter"></spliter>
               <div class="text-container">
-                <span class="text-left">Il en reste encore :</span>
+                <span class="text-left">There still has :</span>
                 <span class="text-right">{{ item.amount }}</span>
               </div>
-              <div class="note">Notez-nous!</div>
+              <div class="note">Rate it!</div>
               <div class="note-component">
                 <rate :home="item"></rate>
                 <span class="note-text">{{ 'Total: ' + item.rate }}</span>
@@ -124,17 +124,17 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Mardi" name="second">
+        <el-tab-pane label="Tuesday" name="second">
           <div v-for="item in bList" :key="item" >
             <div class="container">
               <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
               <div class="plats-name">{{ item.name }}</div>
               <spliter class="plats-spliter"></spliter>
               <div class="text-container">
-                <span class="text-left">Il en reste encore :</span>
+                <span class="text-left">There still has :</span>
                 <span class="text-right">{{ item.amount }}</span>
               </div>
-              <div class="note">Notez-nous!</div>
+              <div class="note">Rate it!</div>
               <div class="note-component">
                 <rate :home="item"></rate>
                 <span class="note-text">{{ 'Total: ' + item.rate }}</span>
@@ -142,17 +142,17 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Mercredi" name="third">
+        <el-tab-pane label="Wednesday" name="third">
           <div v-for="item in cList" :key="item" >
             <div class="container">
               <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
               <div class="plats-name">{{ item.name }}</div>
               <spliter class="plats-spliter"></spliter>
               <div class="text-container">
-                <span class="text-left">Il en reste encore :</span>
+                <span class="text-left">There still has :</span>
                 <span class="text-right">{{ item.amount }}</span>
               </div>
-              <div class="note">Notez-nous!</div>
+              <div class="note">Rate it!</div>
               <div class="note-component">
                 <rate :home="item"></rate>
                 <span class="note-text">{{ 'Total: ' + item.rate }}</span>
@@ -160,17 +160,17 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Jeudi" name="fourth">
+        <el-tab-pane label="Thursday" name="fourth">
           <div v-for="item in dList" :key="item" >
             <div class="container">
               <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
               <div class="plats-name">{{ item.name }}</div>
               <spliter class="plats-spliter"></spliter>
               <div class="text-container">
-                <span class="text-left">Il en reste encore :</span>
+                <span class="text-left">There still has :</span>
                 <span class="text-right">{{ item.amount }}</span>
               </div>
-              <div class="note">Notez-nous!</div>
+              <div class="note">Rate it!</div>
               <div class="note-component">
                 <rate :home="item"></rate>
                 <span class="note-text">{{ 'Total: ' + item.rate }}</span>
@@ -178,17 +178,17 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Vendredi" name="fifth">
+        <el-tab-pane label="Friday" name="fifth">
           <div v-for="item in eList" :key="item" >
             <div class="container">
               <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
               <div class="plats-name">{{ item.name }}</div>
               <spliter class="plats-spliter"></spliter>
               <div class="text-container">
-                <span class="text-left">Il en reste encore :</span>
+                <span class="text-left">There still has :</span>
                 <span class="text-right">{{ item.amount }}</span>
               </div>
-              <div class="note">Notez-nous!</div>
+              <div class="note">Rate it!</div>
               <div class="note-component">
                 <rate :home="item"></rate>
                 <span class="note-text">{{ 'Total: ' + item.rate }}</span>
@@ -650,6 +650,7 @@ export default {
 
 .container {
   margin : 35px;
+  width: 250px;
 }
 
 .plats-name {

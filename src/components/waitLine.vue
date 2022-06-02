@@ -1,7 +1,7 @@
 <template>
   <div class="waitContainer">
-    <div class="wait-header">{{ "Nombre de personnes"}}</div>
-    <div class="wait-middle">{{ "à attendre : "}}</div>
+    <div class="wait-header">{{ "Number of People"}}</div>
+    <div class="wait-middle">{{ "waiting : "}}</div>
     <div class="wait-footer" v-if="this.waitNb != null">{{ this.waitNb }}</div>
     <div class="wait-spliter"></div>
     <div class="waitCircle">
