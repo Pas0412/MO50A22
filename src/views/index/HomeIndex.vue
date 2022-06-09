@@ -124,7 +124,7 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Tuesday" name="second">
+        <el-tab-pane label="Tuesday" name="second" class="tabs-item">
           <div v-for="item in bList" :key="item" >
             <div class="container">
               <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
@@ -142,7 +142,7 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Wednesday" name="third">
+        <el-tab-pane label="Wednesday" name="third" class="tabs-item">
           <div v-for="item in cList" :key="item" >
             <div class="container">
               <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
@@ -160,7 +160,7 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Thursday" name="fourth">
+        <el-tab-pane label="Thursday" name="fourth" class="tabs-item">
           <div v-for="item in dList" :key="item" >
             <div class="container">
               <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
@@ -178,7 +178,7 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Friday" name="fifth">
+        <el-tab-pane label="Friday" name="fifth" class="tabs-item">
           <div v-for="item in eList" :key="item" >
             <div class="container">
               <img class="plats-img" :src="item.imgurl" height="200" width="250" alt="picture">
